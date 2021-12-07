@@ -18,4 +18,14 @@ public class EmployeeRepository {
     public List<Employee> findAll(){
         return employees;
     }
+
+    public Employee findById(Integer id) throws NoEmployeeFoundException {
+        return employees.stream()
+                .filter(employee -> employee.getId().equals(id))
+                .findFirst()
+                .orElseThrow(NoEmployeeFoundException::new);
+    }
+
+//    public List<Employee> findByGender(String gender) {
+//    }
 }
