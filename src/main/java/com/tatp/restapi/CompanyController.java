@@ -22,11 +22,12 @@ public class CompanyController {
     public Company getCompanyById(@PathVariable Integer id) throws NoCompanyFoundException, NoCompanyFoundException {
         return companyRepository.findById(id);
     }
-//
-//    @GetMapping(params = {"page", "pageSize"})
-//    public List<Employee> getCompaniesByPage(@RequestParam int page, @RequestParam int pageSize){
-//    }
-//
+
+    @GetMapping(params = {"page", "pageSize"})
+    public List<Company> getCompaniesByPage(@RequestParam int page, @RequestParam int pageSize){
+        return companyRepository.findByPage(page, pageSize);
+    }
+
 //    @PostMapping
 //    @ResponseStatus(code = HttpStatus.CREATED, reason = "CREATED")
 //    public Employee createCompany(@RequestBody Company company){

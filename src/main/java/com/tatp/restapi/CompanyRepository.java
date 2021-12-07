@@ -26,4 +26,11 @@ public class CompanyRepository {
                 .findFirst()
                 .orElseThrow(NoCompanyFoundException::new);
     }
+
+    public List<Company> findByPage(int page, int pageSize) {
+        return companies.stream()
+                .skip((long)page * pageSize)
+                .limit(pageSize)
+                .collect(Collectors.toList());
+    }
 }
