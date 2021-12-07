@@ -44,11 +44,11 @@ public class CompanyController {
         return companyRepository.save(id, company);
     }
 
-//    @DeleteMapping("/{id}")
-//    @ResponseStatus(value = HttpStatus.NO_CONTENT)
-//    public Employee removeEmployee(@PathVariable Integer id) throws NoEmployeeFoundException {
-//        Employee employee = employeeRepository.findById(id);
-//        return employeeRepository.remove(id);
-//    }
+    @DeleteMapping("/{id}")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public Company removeCompany(@PathVariable Integer id) throws NoCompanyFoundException {
+        Company company = companyRepository.findById(id);
+        return companyRepository.remove(id);
+    }
 
 }

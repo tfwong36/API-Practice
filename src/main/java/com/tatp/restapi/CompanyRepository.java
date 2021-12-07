@@ -49,4 +49,10 @@ public class CompanyRepository {
         companies.add(updatedCompany);
         return updatedCompany;
     }
+
+    public Company remove(Integer id) throws NoCompanyFoundException {
+        Company company = findById(id);
+        companies.remove(company);
+        return company;
+    }
 }
