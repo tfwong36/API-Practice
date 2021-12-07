@@ -23,7 +23,7 @@ public class CompanyController {
         return companyRepository.findById(id);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/employees")
     public List<Employee> getEmployeesFromCompanyById(@PathVariable Integer id) throws NoCompanyFoundException, NoCompanyFoundException {
         return companyRepository.findEmployeesByCompanyId(id);
     }
