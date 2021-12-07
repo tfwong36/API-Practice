@@ -42,4 +42,11 @@ public class CompanyRepository {
         companies.add(company);
         return company;
     }
+
+    public Company save(Integer id, Company updatedCompany) throws NoCompanyFoundException {
+        Company company = findById(id);
+        companies.remove(company);
+        companies.add(updatedCompany);
+        return updatedCompany;
+    }
 }

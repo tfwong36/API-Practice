@@ -33,17 +33,17 @@ public class CompanyController {
     public Company createCompany(@RequestBody Company company){
         return companyRepository.create(company);
     }
-//
-//    @PutMapping("/{id}")
-//    public Employee editEmployee(@PathVariable Integer id, @RequestBody Employee updatedEmployee) throws NoCompanyFoundException {
-//        Employee employee = noCompanyFoundException.findById(id);
-//        if (updatedEmployee.getAge() != null)
-//            employee.setAge(updatedEmployee.getAge());
-//        if (updatedEmployee.getSalary() != null)
-//            employee.setSalary(updatedEmployee.getSalary());
-//        return noCompanyFoundException.save(id, employee);
-//    }
-//
+
+    @PutMapping("/{id}")
+    public Company editCompany(@PathVariable Integer id, @RequestBody Company updatedCompany) throws NoCompanyFoundException {
+        Company company = companyRepository.findById(id);
+        if (updatedCompany.getEmployees() != null)
+            company.setEmployees(updatedCompany.getEmployees());
+        if (updatedCompany.getCompanyName() != null)
+            company.setCompanyName(updatedCompany.getCompanyName());
+        return companyRepository.save(id, company);
+    }
+
 //    @DeleteMapping("/{id}")
 //    @ResponseStatus(value = HttpStatus.NO_CONTENT)
 //    public Employee removeEmployee(@PathVariable Integer id) throws NoEmployeeFoundException {
