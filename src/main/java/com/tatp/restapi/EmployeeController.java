@@ -33,7 +33,7 @@ public class EmployeeController {
     }
 
     @PostMapping
-    @ResponseStatus(code = HttpStatus.CREATED, reason = "CREATED")
+    @ResponseStatus(code = HttpStatus.CREATED)
     public Employee createEmployee(@RequestBody Employee employee){
         return employeeRepository.create(employee);
     }

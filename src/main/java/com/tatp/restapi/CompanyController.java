@@ -23,6 +23,11 @@ public class CompanyController {
         return companyRepository.findById(id);
     }
 
+    @GetMapping("/{id}")
+    public List<Employee> getEmployeesFromCompanyById(@PathVariable Integer id) throws NoCompanyFoundException, NoCompanyFoundException {
+        return companyRepository.findEmployeesByCompanyId(id);
+    }
+
     @GetMapping(params = {"page", "pageSize"})
     public List<Company> getCompaniesByPage(@RequestParam int page, @RequestParam int pageSize){
         return companyRepository.findByPage(page-1, pageSize);

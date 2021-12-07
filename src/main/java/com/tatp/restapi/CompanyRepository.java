@@ -55,4 +55,13 @@ public class CompanyRepository {
         companies.remove(company);
         return company;
     }
+
+    public List<Employee> findEmployeesByCompanyId(Integer id) throws NoCompanyFoundException {
+        Company company =  companies.stream()
+                .filter(employee -> employee.getId().equals(id))
+                .findFirst()
+                .orElseThrow(NoCompanyFoundException::new);
+        return company.getEmployees();
+
+    }
 }

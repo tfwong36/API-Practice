@@ -14,6 +14,9 @@ public class EmployeeRepository {
         employees.add(new Employee(1, "Jason", 18, "male", 5));
         employees.add(new Employee(2, "Jason", 18, "male", 5));
         employees.add(new Employee(3, "Jason", 18, "female", 5));
+        employees.add(new Employee(4, "Jason", 18, "female", 5));
+        employees.add(new Employee(5, "Jason", 18, "female", 5));
+        employees.add(new Employee(6, "Jason", 18, "female", 5));
     }
 
     public List<Employee> findAll(){
