@@ -48,4 +48,11 @@ public class EmployeeRepository {
         employees.add(employee);
         return employee;
     }
+
+    public Employee save(Integer id, Employee updatedEmployee) throws NoEmployeeFoundException {
+        Employee employee = findById(id);
+        employees.remove(employee);
+        employees.add(updatedEmployee);
+        return updatedEmployee;
+    }
 }
