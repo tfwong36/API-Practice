@@ -18,10 +18,10 @@ public class CompanyController {
         return companyRepository.findAll();
     }
 
-//    @GetMapping()
-//    public List<Employee> getCompanyById(){
-//
-//    }
+    @GetMapping("/{id}")
+    public Company getCompanyById(@PathVariable Integer id) throws NoCompanyFoundException, NoCompanyFoundException {
+        return companyRepository.findById(id);
+    }
 //
 //    @GetMapping(params = {"page", "pageSize"})
 //    public List<Employee> getCompaniesByPage(@RequestParam int page, @RequestParam int pageSize){

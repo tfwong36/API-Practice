@@ -12,10 +12,18 @@ public class CompanyRepository {
     private List<Company> companies = new ArrayList<>();
 
     public CompanyRepository(){
-        companies.add(new Company(5,"spring", Arrays.asList(new Employee(1, "Jason", 18, "male", 5))));
+        companies.add(new Company(1,"spring", Arrays.asList(new Employee(1, "Jason", 18, "male", 5))));
+        companies.add(new Company(2,"springboot", Arrays.asList(new Employee(1, "Jason", 18, "male", 5))));
     }
 
     public List<Company> findAll(){
         return companies;
+    }
+
+    public Company findById(Integer id) throws NoCompanyFoundException {
+        return companies.stream()
+                .filter(employee -> employee.getId().equals(id))
+                .findFirst()
+                .orElseThrow(NoCompanyFoundException::new);
     }
 }
