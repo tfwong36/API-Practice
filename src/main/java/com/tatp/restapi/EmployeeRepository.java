@@ -39,4 +39,13 @@ public class EmployeeRepository {
                 .limit(pageSize)
                 .collect(Collectors.toList());
     }
+
+    public Employee create(Employee employee) {
+        employee.setId(employees.stream()
+                .mapToInt(Employee::getId)
+                .max()
+                .orElse(0)+1);
+        employees.add(employee);
+        return employee;
+    }
 }
