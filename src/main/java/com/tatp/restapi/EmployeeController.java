@@ -48,5 +48,12 @@ public class EmployeeController {
         return employeeRepository.save(id, employee);
     }
 
+    @DeleteMapping("/{id}")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public Employee removeEmployee(@PathVariable Integer id) throws NoEmployeeFoundException {
+        Employee employee = employeeRepository.findById(id);
+        return employeeRepository.remove(id);
+    }
+
 
 }

@@ -55,4 +55,10 @@ public class EmployeeRepository {
         employees.add(updatedEmployee);
         return updatedEmployee;
     }
+
+    public Employee remove(Integer id) throws NoEmployeeFoundException {
+        Employee employee = findById(id);
+        employees.remove(employee);
+        return employee;
+    }
 }
