@@ -28,11 +28,11 @@ public class CompanyController {
         return companyRepository.findByPage(page-1, pageSize);
     }
 
-//    @PostMapping
-//    @ResponseStatus(code = HttpStatus.CREATED, reason = "CREATED")
-//    public Employee createCompany(@RequestBody Company company){
-//
-//    }
+    @PostMapping
+    @ResponseStatus(code = HttpStatus.CREATED, reason = "CREATED")
+    public Company createCompany(@RequestBody Company company){
+        return companyRepository.create(company);
+    }
 //
 //    @PutMapping("/{id}")
 //    public Employee editEmployee(@PathVariable Integer id, @RequestBody Employee updatedEmployee) throws NoCompanyFoundException {
