@@ -1,4 +1,5 @@
 package com.tatp.restapi;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,6 +33,7 @@ public class EmployeeController {
     }
 
     @PostMapping
+    @ResponseStatus(code = HttpStatus.CREATED, reason = "CREATED")
     public Employee createEmployee(@RequestBody Employee employee){
         return employeeRepository.create(employee);
     }
