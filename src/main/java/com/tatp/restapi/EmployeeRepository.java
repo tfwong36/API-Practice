@@ -13,6 +13,7 @@ public class EmployeeRepository {
     public EmployeeRepository(){
         employees.add(new Employee(1, "Jason", 18, "male", 5));
         employees.add(new Employee(2, "Jason", 18, "male", 5));
+        employees.add(new Employee(3, "Jason", 18, "female", 5));
     }
 
     public List<Employee> findAll(){
@@ -26,6 +27,9 @@ public class EmployeeRepository {
                 .orElseThrow(NoEmployeeFoundException::new);
     }
 
-//    public List<Employee> findByGender(String gender) {
-//    }
+    public List<Employee> findByGender(String gender) {
+        return employees.stream()
+                .filter(employee -> employee.getGender().equals(gender))
+                .collect(Collectors.toList());
+    }
 }
