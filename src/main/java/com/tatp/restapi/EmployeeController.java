@@ -41,9 +41,9 @@ public class EmployeeController {
     @PutMapping("/{id}")
     public Employee editEmployee(@PathVariable Integer id, @RequestBody Employee updatedEmployee) throws NoEmployeeFoundException {
         Employee employee = employeeRepository.findById(id);
-        if (updatedEmployee.getAge() != null)
+        if (updatedEmployee.getAge() != null && !updatedEmployee.getAge().equals(0))
             employee.setAge(updatedEmployee.getAge());
-        if (updatedEmployee.getSalary() != null)
+        if (updatedEmployee.getSalary() != null && !updatedEmployee.getSalary().equals(0))
             employee.setSalary(updatedEmployee.getSalary());
         return employeeRepository.save(id, employee);
     }
