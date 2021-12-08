@@ -102,4 +102,32 @@ public class EmployeeServiceTest {
         //return
         assertEquals(employees,actual);
     }
+    @Test
+    void should_return_created_employee_when_create_given_employee() {
+        //given
+        Employee employee1 = new Employee(1, "God",999,"male",0);
+        given(employeeRepository.create(any()))
+                .willReturn(employee1);
+        //when
+        Employee actual = employeeService.create(employee1);
+        verify(employeeRepository).create(employee1);
+        //return
+        assertEquals(employee1,actual);
+    }
+
+    @Test
+    void should_return_employees_when_get_given_employees_and_page_and_pageSize() {
+        //given
+        List<Employee> employees = new ArrayList<>();
+        Integer page = 1;
+        Integer pageSize = 2;
+        Employee employee1 = new Employee(1, "God",999,"male",0);
+        given(employeeRepository.findByPage(page,pageSize))
+                .willReturn(employees);
+        //when
+        List<Employee> actual = employeeService.findByPage(page,pageSize);
+        verify(employeeRepository).findByPage(page,pageSize);
+        //return
+        assertEquals(employees,actual);
+    }
 }
