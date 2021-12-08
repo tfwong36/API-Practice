@@ -12,6 +12,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(SpringExtension.class)
 public class EmployeeServiceTest {
@@ -67,5 +68,19 @@ public class EmployeeServiceTest {
 
         //then
         assertEquals(employee, actual);
+    }
+
+    @Test
+    void should_employee_when_get_given_id() {
+        //given
+        Employee employee = new Employee(1, "Jason", 10, "male", 1000);
+        given(employeeRepository.findById(any()))
+                .willReturn(employee);
+        //when
+        Employee actual = employeeService.findById(employee.getId());
+        verify(employeeRepository).findById(employee.getId());
+
+        //return
+        assertEquals(employee,actual);
     }
 }
