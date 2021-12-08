@@ -117,4 +117,18 @@ class CompanyControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.companyName").value("Spring111"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1));
     }
+
+    @Test
+    void should_return_nothing_when_perform_delete_given_employee_id() throws Exception {
+        //given
+        companyRepository.create(new Company(1,"Spring1", new EmployeeRepository().findAll()));
+
+        //when
+        //then
+        mockMvc.perform(delete("/companies/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+        assertEquals(0, companyRepository.findAll().size());
+
+    }
 }
