@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -42,5 +44,25 @@ class EmployeeControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].age").value(18))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value("Jason"));
     }
+
+    @Test
+    void should_return_employee_when_perform_post_given_employee() throws Exception {
+        String employee="{\n" +
+                "        \"name\": \"adddddddddddddddddJason\",\n" +
+                "        \"age\": 18,\n" +
+                "        \"gender\": \"male\",\n" +
+                "        \"salary\": 5\n" +
+                "    }";
+
+        mockMvc.perform(post("/employees")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(employee))
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("adddddddddddddddddJason"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.age").value(18))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.gender").value("male"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.salary").value(5));
+    }
+
 
 }
