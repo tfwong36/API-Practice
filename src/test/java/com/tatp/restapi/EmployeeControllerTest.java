@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 @SpringBootTest
@@ -124,15 +126,6 @@ class EmployeeControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(5)));
     }
 
-//    @PutMapping("/{id}") //NOT PATCH?
-//    public Employee editEmployee(@PathVariable Integer id, @RequestBody Employee updatedEmployee){
-//        Employee employee = employeeRepository.findById(id);
-//        if (updatedEmployee.getAge() != null && !updatedEmployee.getAge().equals(0))
-//            employee.setAge(updatedEmployee.getAge());
-//        if (updatedEmployee.getSalary() != null && !updatedEmployee.getSalary().equals(0))
-//            employee.setSalary(updatedEmployee.getSalary());
-//        return employeeRepository.save(id, employee);
-//    }
     @Test
     void should_return_employee_when_perform_put_given_updated_employee_and_id() throws Exception {
         //given
@@ -152,6 +145,25 @@ class EmployeeControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.age").value(20))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.gender").value("male"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.salary").value(500));
+    }
+//    @DeleteMapping("/{id}")
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
+//    public void removeEmployee(@PathVariable Integer id){
+//        Employee employee = employeeRepository.findById(id);
+//        employeeRepository.remove(id);
+//    }
+    @Test
+    void should_return_nothing_when_perform_delete_given_employee_id() throws Exception {
+        //given
+        employeeRepository.create(new Employee(1, "Jason",18,"male",5));
+
+        //when
+        //then
+        mockMvc.perform(delete("/employees/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+        assertEquals(0, employeeRepository.findAll().size());
+
     }
 
 }
