@@ -85,5 +85,26 @@ class EmployeeControllerTest {
     }
 
 
+    @Test
+    void should_return_employees_when_perform_get_given_employee_gender() throws Exception  {
+        //given
+        List<Employee> employees = new ArrayList<>();
+        Employee employee = new Employee(1, "Jason",18,"male",5);
+        employeeRepository.create(employee);
+        employees.add(employee);
+        employees.add(new Employee(2, "Julia",18,"female",5));
+
+        //when
+        //then
+        mockMvc.perform(get("/employees")
+                .param("gender", "male")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(1))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value("Jason"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].age").value(18))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].gender").value("male"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].salary").value(5));
+    }
 
 }
