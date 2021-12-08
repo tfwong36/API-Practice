@@ -89,6 +89,17 @@ public class CompanyServiceTest {
         //then
         assertEquals(companies, actual);
     }
+    @Test
+    void should_return_company_when_perform_post_given_company() throws Exception {
+        //given
+        Company company1 = new Company(1,"Spring", null);
+        given(companyRepository.create(company1))
+                .willReturn(company1);
+        //when
+        Company actual = companyService.create(company1);
+        //then
+        assertEquals(company1, actual);
+    }
 
 //    @Test
 //    void should_return_employees_when_findEmployeesByCompanyId_given_employees_and_companies_and_id() {
