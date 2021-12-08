@@ -19,12 +19,10 @@ public class EmployeeService {
 
     public Employee edit(Integer id, Employee updatedEmployee) {
         Employee employee = employeeRepository.findById(id);
-        if (updatedEmployee.getAge() != null && updatedEmployee.getAge().equals(0)){
+        if (updatedEmployee.getAge() != null && !updatedEmployee.getAge().equals(0))
             employee.setAge(updatedEmployee.getAge());
-        }
-        if (updatedEmployee.getSalary() != null && updatedEmployee.getSalary().equals(0)) {
+        if (updatedEmployee.getSalary() != null && !updatedEmployee.getSalary().equals(0))
             employee.setSalary(updatedEmployee.getSalary());
-        }
         return employeeRepository.save(id, employee);
     }
 
