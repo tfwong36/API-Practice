@@ -146,12 +146,7 @@ class EmployeeControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.gender").value("male"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.salary").value(500));
     }
-//    @DeleteMapping("/{id}")
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    public void removeEmployee(@PathVariable Integer id){
-//        Employee employee = employeeRepository.findById(id);
-//        employeeRepository.remove(id);
-//    }
+
     @Test
     void should_return_nothing_when_perform_delete_given_employee_id() throws Exception {
         //given

@@ -18,6 +18,10 @@ public class CompanyRepository {
         companies.add(new Company(5,"JerryFish", new EmployeeRepository().findAll()));
     }
 
+    public void clearAll() {
+        companies.clear();
+    }
+
     public List<Company> findAll(){
         return companies;
     }
