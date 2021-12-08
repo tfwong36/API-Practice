@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(SpringExtension.class)
@@ -34,4 +35,23 @@ public class EmployeeServiceTest {
         assertEquals(employees, actual);
     }
 
+
+    @Test
+    void should_return_updated_employee_when_edit_employee_given_updated_employee() {
+        //given
+        Employee employee = new Employee(1, "Jason", 10, "male", 1000);
+        Employee updatedEmployee = new Employee(1, "Jason", 10, "male", 2000);
+        given(employeeRepository.findById(any()))
+                .willReturn(employee);
+        employee.setAge(updatedEmployee.getAge());
+        employee.setSalary(updatedEmployee.getSalary());
+        given(employeeRepository.save(any(), any(Employee.class)))
+                .willReturn(employee);
+
+        //when
+        Employee actual = employeeService.edit(employee.getId(), updatedEmployee);
+
+        //then
+        assertEquals(employee, actual);
+    }
 }
