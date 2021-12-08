@@ -4,13 +4,17 @@ import com.tatp.restapi.entity.Company;
 import com.tatp.restapi.entity.Employee;
 import com.tatp.restapi.repository.CompanyRepository;
 import com.tatp.restapi.repository.EmployeeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.concurrent.ConcurrentMap;
+import java.util.stream.Collectors;
 
 @Service
 public class CompanyService {
+    @Autowired
+    EmployeeRepository employeeRepository;
     private CompanyRepository companyRepository;
 
     public CompanyService(CompanyRepository companyRepository){
@@ -21,11 +25,20 @@ public class CompanyService {
         return companyRepository.findAll();
     }
     public Company findById(Integer id) {
-        return companyRepository.findById(id);
+        List<Employee> employees = employeeRepository.findAll()
+                .stream()
+                .filter(employee -> employee.getCompanyID().equals(id))
+                .collect(Collectors.toList());
+        Company foundCompany = companyRepository.findById(id);
+        foundCompany.setEmployees(employees);
+        return foundCompany;
     }
 
     public List<Employee> findEmployeesByCompanyId(Integer id) {
-        return companyRepository.findEmployeesByCompanyId(id);
+        return employeeRepository.findAll()
+                .stream()
+                .filter(employee -> employee.getCompanyID().equals(id))
+                .collect(Collectors.toList());
     }
 
     public List<Company> findByPage(Integer page, Integer pageSize) {

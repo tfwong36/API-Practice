@@ -12,9 +12,6 @@ import java.util.stream.Collectors;
 
 @Repository
 public class CompanyRepository {
-    @Autowired
-    private EmployeeRepository employeeRepository;
-
     private List<Company> companies = new ArrayList<>();
 
     public CompanyRepository(){
@@ -34,15 +31,10 @@ public class CompanyRepository {
     }
 
     public Company findById(Integer id){
-        List<Employee> employees = employeeRepository.findAll()
-                                    .stream()
-                                    .filter(employee -> employee.getCompanyID().equals(id))
-                                    .collect(Collectors.toList());
         Company foundCompany = companies.stream()
                             .filter(company -> company.getId().equals(id))
                             .findFirst()
                             .orElseThrow(NoCompanyFoundException::new);
-        foundCompany.setEmployees(employees);
         return foundCompany;
     }
 
@@ -75,9 +67,6 @@ public class CompanyRepository {
     }
 
     public List<Employee> findEmployeesByCompanyId(Integer id){
-        return employeeRepository.findAll()
-                .stream()
-                .filter(employee -> employee.getCompanyID().equals(id))
-                .collect(Collectors.toList());
+        return null;
     }
 }
