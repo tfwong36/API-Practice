@@ -15,7 +15,8 @@ import java.util.stream.Collectors;
 public class CompanyService {
     @Autowired
     EmployeeRepository employeeRepository;
-    private CompanyRepository companyRepository;
+    @Autowired
+    CompanyRepository companyRepository;
 
     public CompanyService(CompanyRepository companyRepository){
         this.companyRepository = companyRepository;

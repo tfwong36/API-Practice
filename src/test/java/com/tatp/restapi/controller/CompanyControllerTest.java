@@ -129,6 +129,8 @@ class CompanyControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
         assertEquals(0, companyRepository.findAll().size());
-
     }
+
+
+
 }

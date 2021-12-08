@@ -28,8 +28,15 @@ package com.tatp.restapi.service;
 public class CompanyServiceTest {
     @Mock
     CompanyRepository companyRepository;
+
+    @Mock
+    EmployeeRepository employeeRepository;
+
     @InjectMocks
     CompanyService companyService;
+
+    @InjectMocks
+    EmployeeService employeeService;
 
     @Test
     void should_return_all_companies_when_find_all_given_companies() {
@@ -45,5 +52,20 @@ public class CompanyServiceTest {
         //then
         assertEquals(companies, actual);
     }
+    @Test
+    void should_return_a_company_when_get_company_given_company_id() {
+        //given
+        List<Company> companies = new ArrayList<>();
 
+        Company company1 = new Company(1,"Spring", null);
+        Company company2 = new Company(2,"Spring2", null);
+        companies.add(company1);
+        companies.add(company2);
+        given(companyRepository.findById(any()))
+                .willReturn(company1);
+        //when
+        Company actual = companyService.findById(company1.getId());
+        //then
+        assertEquals(company1, actual);
+    }
 }
