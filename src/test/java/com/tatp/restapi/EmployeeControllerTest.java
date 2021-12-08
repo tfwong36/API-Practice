@@ -8,6 +8,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,11 +90,8 @@ class EmployeeControllerTest {
     @Test
     void should_return_employees_when_perform_get_given_employee_gender() throws Exception  {
         //given
-        List<Employee> employees = new ArrayList<>();
-        Employee employee = new Employee(1, "Jason",18,"male",5);
-        employeeRepository.create(employee);
-        employees.add(employee);
-        employees.add(new Employee(2, "Julia",18,"female",5));
+        employeeRepository.create(new Employee(1, "Jason",18,"male",5));
+        employeeRepository.create(new Employee(2, "Julia",18,"female",5));
 
         //when
         //then
@@ -106,5 +105,29 @@ class EmployeeControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].gender").value("male"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].salary").value(5));
     }
+//    @GetMapping(params = {"page", "pageSize"})
+//    public List<Employee> getEmployeesByPage(@RequestParam int page, @RequestParam int pageSize){
+//        return employeeRepository.findByPage(page-1, pageSize);
+//    }
+    @Test
+    void should_return_employees_when_perform_get_given_page_and_pageSize() throws Exception {
+        //given
+        employeeRepository.create(new Employee(1, "Jason",18,"male",5));
+        employeeRepository.create(new Employee(2, "Julia1",18,"female",5));
+        employeeRepository.create(new Employee(3, "Julia2",18,"female",5));
+        employeeRepository.create(new Employee(4, "Julia3",18,"female",5));
+        employeeRepository.create(new Employee(5, "Julia4",18,"female",5));
+        employeeRepository.create(new Employee(6, "Julia5",18,"female",5));
+
+        //when
+        //then
+        mockMvc.perform(get("/employees")
+                .param("page", String.valueOf(1))
+                .param("pageSize", String.valueOf(5))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(5)));
+    }
+
 
 }
