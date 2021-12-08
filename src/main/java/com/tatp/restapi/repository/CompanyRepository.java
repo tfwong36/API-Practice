@@ -15,11 +15,11 @@ public class CompanyRepository {
     private List<Company> companies = new ArrayList<>();
 
     public CompanyRepository(){
-        companies.add(new Company(1,"Spring", new EmployeeRepository().findAll()));
-        companies.add(new Company(2,"SpringBoot", new EmployeeRepository().findAll()));
-        companies.add(new Company(3,"Flask", new EmployeeRepository().findAll()));
-        companies.add(new Company(4,"Tomcat", new EmployeeRepository().findAll()));
-        companies.add(new Company(5,"JerryFish", new EmployeeRepository().findAll()));
+        companies.add(new Company(1,"Spring", null));
+        companies.add(new Company(2,"SpringBoot", null));
+        companies.add(new Company(3,"Flask", null));
+        companies.add(new Company(4,"Tomcat", null));
+        companies.add(new Company(5,"JerryFish", null));
     }
 
     public void clearAll() {
@@ -67,6 +67,7 @@ public class CompanyRepository {
     }
 
     public List<Employee> findEmployeesByCompanyId(Integer id){
+        //never reach here
         return null;
     }
 }

@@ -1,7 +1,10 @@
 package com.tatp.restapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.List;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Company {
     private Integer id;
     private String companyName;

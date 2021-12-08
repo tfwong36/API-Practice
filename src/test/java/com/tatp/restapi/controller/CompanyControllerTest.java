@@ -34,7 +34,6 @@ class CompanyControllerTest {
     @Test
     void should_get_all_companies_when_perform_given_companies_and_company_id() throws Exception {
         //given
-        employeeRepository
         companyRepository.create(new Company(1,"Spring1", new EmployeeRepository().findAll()));
         companyRepository.create(new Company(2,"Spring2", new EmployeeRepository().findAll()));
         companyRepository.create(new Company(3,"Spring3", new EmployeeRepository().findAll()));
@@ -83,7 +82,7 @@ class CompanyControllerTest {
         //then
         mockMvc.perform(MockMvcRequestBuilders.get("/companies/1/employees"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(6)));
+                .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(companyRepository.findAll().size())));
     }
     @Test
     void should_return_companies_when_perform_get_given_page_and_pageSize() throws Exception {

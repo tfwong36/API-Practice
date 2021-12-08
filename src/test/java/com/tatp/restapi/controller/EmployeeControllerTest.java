@@ -35,7 +35,7 @@ class EmployeeControllerTest {
     void should_get_all_employees_when_perform_given_employees() throws Exception {
         //given
         List<Employee> employees = new ArrayList<>();
-        Employee employee = new Employee(1, "Jason",18,"male",99999999);
+        Employee employee = new Employee(1, "Jason",18,"male",99999999, 1);
         employeeRepository.create(employee);
         employees.add(employee);
         //when
@@ -51,18 +51,19 @@ class EmployeeControllerTest {
     @Test
     void should_return_employee_when_perform_post_given_employee() throws Exception {
         String employee="{\n" +
-                "        \"name\": \"adddddddddddddddddJason\",\n" +
-                "        \"age\": 18,\n" +
-                "        \"gender\": \"male\",\n" +
-                "        \"salary\": 5\n" +
-                "    }";
+                "    \"name\": \"AddAddJason\",\n" +
+                "    \"age\": 10,\n" +
+                "    \"gender\": \"male\",\n" +
+                "    \"salary\": 5,\n" +
+                "    \"companyID\":1\n" +
+                "}";
 
         mockMvc.perform(post("/employees")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(employee))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("adddddddddddddddddJason"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.age").value(18))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("AddAddJason"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.age").value(10))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.gender").value("male"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.salary").value(5));
         assertEquals(1, employeeRepository.findAll().size());
@@ -72,7 +73,7 @@ class EmployeeControllerTest {
     void should_return_employee_when_perform_get_given_employee_id() throws Exception  {
         //given
         List<Employee> employees = new ArrayList<>();
-        Employee employee = new Employee(1, "Jason",18,"male",5);
+        Employee employee = new Employee(1, "Jason",18,"male",5, 1);
         employeeRepository.create(employee);
         employees.add(employee);
         //when
@@ -91,8 +92,8 @@ class EmployeeControllerTest {
     @Test
     void should_return_employees_when_perform_get_given_employee_gender() throws Exception  {
         //given
-        employeeRepository.create(new Employee(1, "Jason",18,"male",5));
-        employeeRepository.create(new Employee(2, "Julia",18,"female",5));
+        employeeRepository.create(new Employee(1, "Jason",18,"male",5, 1));
+        employeeRepository.create(new Employee(2, "Julia",18,"female",5, 1));
 
         //when
         //then
@@ -110,12 +111,12 @@ class EmployeeControllerTest {
     @Test
     void should_return_employees_when_perform_get_given_page_and_pageSize() throws Exception {
         //given
-        employeeRepository.create(new Employee(1, "Jason",18,"male",5));
-        employeeRepository.create(new Employee(2, "Julia1",18,"female",5));
-        employeeRepository.create(new Employee(3, "Julia2",18,"female",5));
-        employeeRepository.create(new Employee(4, "Julia3",18,"female",5));
-        employeeRepository.create(new Employee(5, "Julia4",18,"female",5));
-        employeeRepository.create(new Employee(6, "Julia5",18,"female",5));
+        employeeRepository.create(new Employee(1, "Jason",18,"male",5, 1));
+        employeeRepository.create(new Employee(2, "Julia1",18,"female",5,1));
+        employeeRepository.create(new Employee(3, "Julia2",18,"female",5,1));
+        employeeRepository.create(new Employee(4, "Julia3",18,"female",5,1));
+        employeeRepository.create(new Employee(5, "Julia4",18,"female",5,1));
+        employeeRepository.create(new Employee(6, "Julia5",18,"female",5,1));
 
         //when
         //then
@@ -135,7 +136,7 @@ class EmployeeControllerTest {
     @Test
     void should_return_employee_when_perform_put_given_updated_employee_and_id() throws Exception {
         //given
-        employeeRepository.create(new Employee(1, "Jason",18,"male",5));
+        employeeRepository.create(new Employee(1, "Jason",18,"male",5,1));
         String employee="{\n" +
                 "        \"age\": 20,\n" +
                 "        \"salary\": 500\n" +
@@ -156,7 +157,7 @@ class EmployeeControllerTest {
     @Test
     void should_return_nothing_when_perform_delete_given_employee_id() throws Exception {
         //given
-        employeeRepository.create(new Employee(1, "Jason",18,"male",5));
+        employeeRepository.create(new Employee(1, "Jason",18,"male",5,1));
 
         //when
         //then

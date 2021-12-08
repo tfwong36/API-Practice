@@ -30,8 +30,7 @@ public class CompanyService {
                 .filter(employee -> employee.getCompanyID().equals(id))
                 .collect(Collectors.toList());
         Company foundCompany = companyRepository.findById(id);
-        foundCompany.setEmployees(employees);
-        return foundCompany;
+        return new Company(foundCompany.getId(),foundCompany.getCompanyName(), employees);
     }
 
     public List<Employee> findEmployeesByCompanyId(Integer id) {
