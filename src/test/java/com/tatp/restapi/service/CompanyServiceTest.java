@@ -100,7 +100,17 @@ public class CompanyServiceTest {
         //then
         assertEquals(company1, actual);
     }
+    @Test
+    void should_delete_company_when_perform_delete_given_company_and_id() throws Exception {
+        //given
+        Company company1 = new Company(1,"Spring", null);
 
+        //when
+        companyService.remove(company1.getId());
+
+        //then
+        verify(companyRepository).remove(company1.getId());
+    }
 //    @Test
 //    void should_return_employees_when_findEmployeesByCompanyId_given_employees_and_companies_and_id() {
 //        //given
