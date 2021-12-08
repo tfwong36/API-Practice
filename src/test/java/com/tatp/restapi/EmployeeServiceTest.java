@@ -35,6 +35,20 @@ public class EmployeeServiceTest {
         assertEquals(employees, actual);
     }
 
+    @Test
+    void should_return_a_employee_when_get_employee_given_employee_id() {
+        //given
+        List<Employee> employees = new ArrayList<>();
+        Employee employee = new Employee(1, "Jason", 10, "male", 1000);
+        employees.add(employee);
+        given(employeeRepository.findById(any()))
+                .willReturn(employee);
+        //when
+        Employee actual = employeeService.findById(employee.getId());
+
+        //then
+        assertEquals(employee, actual);
+    }
 
     @Test
     void should_return_updated_employee_when_edit_employee_given_updated_employee() {
