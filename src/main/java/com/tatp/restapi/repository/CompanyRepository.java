@@ -3,6 +3,7 @@ package com.tatp.restapi.repository;
 import com.tatp.restapi.entity.Employee;
 import com.tatp.restapi.exception.NoCompanyFoundException;
 import com.tatp.restapi.entity.Company;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -11,6 +12,9 @@ import java.util.stream.Collectors;
 
 @Repository
 public class CompanyRepository {
+    @Autowired
+    private EmployeeRepository employeeRepository;
+
     private List<Company> companies = new ArrayList<>();
 
     public CompanyRepository(){
@@ -30,10 +34,16 @@ public class CompanyRepository {
     }
 
     public Company findById(Integer id){
-        return companies.stream()
-                .filter(employee -> employee.getId().equals(id))
-                .findFirst()
-                .orElseThrow(NoCompanyFoundException::new);
+        List<Employee> employees = employeeRepository.findAll()
+                                    .stream()
+                                    .filter(employee -> employee.getCompanyID().equals(id))
+                                    .collect(Collectors.toList());
+        Company foundCompany = companies.stream()
+                            .filter(company -> company.getId().equals(id))
+                            .findFirst()
+                            .orElseThrow(NoCompanyFoundException::new);
+        foundCompany.setEmployees(employees);
+        return foundCompany;
     }
 
     public List<Company> findByPage(int page, int pageSize) {

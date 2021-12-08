@@ -3,7 +3,9 @@ package com.tatp.restapi.controller;
 import com.tatp.restapi.repository.CompanyRepository;
 import com.tatp.restapi.entity.Employee;
 import com.tatp.restapi.entity.Company;
+import com.tatp.restapi.repository.EmployeeRepository;
 import com.tatp.restapi.service.CompanyService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("companies")
 public class CompanyController {
+
     private CompanyService companyService;
     public CompanyController(CompanyService companyService){
         this.companyService = companyService;
