@@ -1,5 +1,7 @@
-package com.tatp.restapi;
+package com.tatp.restapi.service;
 
+import com.tatp.restapi.entity.Employee;
+import com.tatp.restapi.repository.EmployeeRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -130,6 +132,7 @@ public class EmployeeServiceTest {
         //return
         assertEquals(employees,actual);
     }
+
     @Test
     void should_return_employee_when_delete_given_employees_id() {
         //given

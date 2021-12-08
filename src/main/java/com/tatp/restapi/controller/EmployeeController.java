@@ -1,4 +1,6 @@
-package com.tatp.restapi;
+package com.tatp.restapi.controller;
+import com.tatp.restapi.repository.EmployeeRepository;
+import com.tatp.restapi.entity.Employee;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

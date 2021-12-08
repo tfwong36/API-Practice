@@ -1,5 +1,7 @@
-package com.tatp.restapi;
+package com.tatp.restapi.service;
 
+import com.tatp.restapi.entity.Employee;
+import com.tatp.restapi.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

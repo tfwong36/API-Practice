@@ -1,5 +1,8 @@
-package com.tatp.restapi;
+package com.tatp.restapi.repository;
 
+import com.tatp.restapi.entity.Employee;
+import com.tatp.restapi.exception.NoCompanyFoundException;
+import com.tatp.restapi.entity.Company;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;

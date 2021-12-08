@@ -1,4 +1,4 @@
-package com.tatp.restapi;
+package com.tatp.restapi.entity;
 
 public class Employee {
     private Integer id;

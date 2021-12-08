@@ -1,4 +1,4 @@
-package com.tatp.restapi;
+package com.tatp.restapi.exception;
 
 public class NoCompanyFoundException extends RuntimeException {
     public NoCompanyFoundException() {
