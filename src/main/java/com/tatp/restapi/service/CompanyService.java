@@ -18,27 +18,23 @@ public class CompanyService {
     @Autowired
     CompanyRepository companyRepository;
 
-    public CompanyService(CompanyRepository companyRepository){
+    public CompanyService(CompanyRepository companyRepository, EmployeeRepository employeeRepository){
         this.companyRepository = companyRepository;
+        this.employeeRepository = employeeRepository;
+
     }
 
     public List<Company> findAll() {
         return companyRepository.findAll();
     }
     public Company findById(Integer id) {
-        List<Employee> employees = employeeRepository.findAll()
-                .stream()
-                .filter(employee -> employee.getCompanyID().equals(id))
-                .collect(Collectors.toList());
-        Company foundCompany = companyRepository.findById(id);
-        return new Company(foundCompany.getId(),foundCompany.getCompanyName(), employees);
+        Company company = companyRepository.findById(id);
+        company.setEmployees(employeeRepository.getEmployeesByCompanyID(id));
+        return company;
     }
 
     public List<Employee> findEmployeesByCompanyId(Integer id) {
-        return employeeRepository.findAll()
-                .stream()
-                .filter(employee -> employee.getCompanyID().equals(id))
-                .collect(Collectors.toList());
+        return employeeRepository.getEmployeesByCompanyID(id);
     }
 
     public List<Company> findByPage(Integer page, Integer pageSize) {

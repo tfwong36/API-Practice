@@ -28,6 +28,11 @@ public class EmployeeRepository {
         return employees;
     }
 
+    public List<Employee> getEmployeesByCompanyID(Integer companyID){
+        return findAll().stream()
+                .filter(employee -> employee.getCompanyID().equals(companyID))
+                .collect(Collectors.toList());
+    }
     public Employee findById(Integer id){
         return employees.stream()
                 .filter(employee -> employee.getId().equals(id))
