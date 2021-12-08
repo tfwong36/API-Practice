@@ -71,4 +71,24 @@ class CompanyControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(4));
     }
 
+
+//    @GetMapping("/{id}/employees")
+//    public List<Employee> getEmployeesFromCompanyById(@PathVariable Integer id){
+//        return companyRepository.findEmployeesByCompanyId(id);
+//    }
+    @Test
+    void should_return_employees_when_perform_get_given_companies_and_company_id() throws Exception {
+        //given
+        companyRepository.create(new Company(1,"Spring1", new EmployeeRepository().findAll()));
+        companyRepository.create(new Company(2,"Spring2", new EmployeeRepository().findAll()));
+        companyRepository.create(new Company(3,"Spring3", new EmployeeRepository().findAll()));
+
+        //when
+        //then
+        mockMvc.perform(MockMvcRequestBuilders.get("/companies/1/employees"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(6)));
+    }
+
+
 }
