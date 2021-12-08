@@ -18,7 +18,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/{id}")
-    public Employee getEmployeeById(@PathVariable Integer id) throws NoEmployeeFoundException {
+    public Employee getEmployeeById(@PathVariable Integer id){
         return employeeRepository.findById(id);
     }
 
@@ -28,18 +28,18 @@ public class EmployeeController {
     }
 
     @GetMapping(params = {"page", "pageSize"})
-    public List<Employee> getEmployeesbByPage(@RequestParam int page, @RequestParam int pageSize){
+    public List<Employee> getEmployeesByPage(@RequestParam int page, @RequestParam int pageSize){
         return employeeRepository.findByPage(page-1, pageSize);
     }
 
     @PostMapping
-    @ResponseStatus(code = HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.CREATED)
     public Employee createEmployee(@RequestBody Employee employee){
         return employeeRepository.create(employee);
     }
 
-    @PutMapping("/{id}")
-    public Employee editEmployee(@PathVariable Integer id, @RequestBody Employee updatedEmployee) throws NoEmployeeFoundException {
+    @PutMapping("/{id}") //NOT PATCH?
+    public Employee editEmployee(@PathVariable Integer id, @RequestBody Employee updatedEmployee){
         Employee employee = employeeRepository.findById(id);
         if (updatedEmployee.getAge() != null && !updatedEmployee.getAge().equals(0))
             employee.setAge(updatedEmployee.getAge());
@@ -49,10 +49,10 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public Employee removeEmployee(@PathVariable Integer id) throws NoEmployeeFoundException {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void removeEmployee(@PathVariable Integer id){
         Employee employee = employeeRepository.findById(id);
-        return employeeRepository.remove(id);
+        employeeRepository.remove(id);
     }
 
 

@@ -23,7 +23,7 @@ public class EmployeeRepository {
         return employees;
     }
 
-    public Employee findById(Integer id) throws NoEmployeeFoundException {
+    public Employee findById(Integer id){
         return employees.stream()
                 .filter(employee -> employee.getId().equals(id))
                 .findFirst()
@@ -52,16 +52,15 @@ public class EmployeeRepository {
         return employee;
     }
 
-    public Employee save(Integer id, Employee updatedEmployee) throws NoEmployeeFoundException {
+    public Employee save(Integer id, Employee updatedEmployee){
         Employee employee = findById(id);
         employees.remove(employee);
         employees.add(updatedEmployee);
         return updatedEmployee;
     }
 
-    public Employee remove(Integer id) throws NoEmployeeFoundException {
+    public void remove(Integer id){
         Employee employee = findById(id);
         employees.remove(employee);
-        return employee;
     }
 }

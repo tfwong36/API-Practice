@@ -34,26 +34,24 @@ public class CompanyController {
     }
 
     @PostMapping
-    @ResponseStatus(code = HttpStatus.CREATED, reason = "CREATED")
+    @ResponseStatus(HttpStatus.CREATED)
     public Company createCompany(@RequestBody Company company){
         return companyRepository.create(company);
     }
 
     @PutMapping("/{id}")
-    public Company editCompany(@PathVariable Integer id, @RequestBody Company updatedCompany) throws NoCompanyFoundException {
+    public Company editCompany(@PathVariable Integer id, @RequestBody Company updatedCompany){
         Company company = companyRepository.findById(id);
-        if (updatedCompany.getEmployees() != null)
-            company.setEmployees(updatedCompany.getEmployees());
         if (updatedCompany.getCompanyName() != null)
             company.setCompanyName(updatedCompany.getCompanyName());
         return companyRepository.save(id, company);
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public Company removeCompany(@PathVariable Integer id) throws NoCompanyFoundException {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void removeCompany(@PathVariable Integer id){
         Company company = companyRepository.findById(id);
-        return companyRepository.remove(id);
+        companyRepository.remove(id);
     }
 
 }

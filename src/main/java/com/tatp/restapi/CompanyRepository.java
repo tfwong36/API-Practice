@@ -3,7 +3,6 @@ package com.tatp.restapi;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,15 +11,18 @@ public class CompanyRepository {
     private List<Company> companies = new ArrayList<>();
 
     public CompanyRepository(){
-        companies.add(new Company(1,"spring", Arrays.asList(new Employee(1, "Jason", 18, "male", 5))));
-        companies.add(new Company(2,"springboot", Arrays.asList(new Employee(1, "Jason", 18, "male", 5))));
+        companies.add(new Company(1,"Spring", new EmployeeRepository().findAll()));
+        companies.add(new Company(2,"SpringBoot", new EmployeeRepository().findAll()));
+        companies.add(new Company(3,"Flask", new EmployeeRepository().findAll()));
+        companies.add(new Company(4,"Tomcat", new EmployeeRepository().findAll()));
+        companies.add(new Company(5,"JerryFish", new EmployeeRepository().findAll()));
     }
 
     public List<Company> findAll(){
         return companies;
     }
 
-    public Company findById(Integer id) throws NoCompanyFoundException {
+    public Company findById(Integer id){
         return companies.stream()
                 .filter(employee -> employee.getId().equals(id))
                 .findFirst()
@@ -43,20 +45,19 @@ public class CompanyRepository {
         return company;
     }
 
-    public Company save(Integer id, Company updatedCompany) throws NoCompanyFoundException {
+    public Company save(Integer id, Company updatedCompany){
         Company company = findById(id);
         companies.remove(company);
         companies.add(updatedCompany);
         return updatedCompany;
     }
 
-    public Company remove(Integer id) throws NoCompanyFoundException {
+    public void remove(Integer id) throws NoCompanyFoundException {
         Company company = findById(id);
         companies.remove(company);
-        return company;
     }
 
-    public List<Employee> findEmployeesByCompanyId(Integer id) throws NoCompanyFoundException {
+    public List<Employee> findEmployeesByCompanyId(Integer id){
         Company company =  companies.stream()
                 .filter(employee -> employee.getId().equals(id))
                 .findFirst()
