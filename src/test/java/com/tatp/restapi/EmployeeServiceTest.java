@@ -71,7 +71,7 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    void should_employee_when_get_given_id() {
+    void should_return_employee_when_get_given_employee_id() {
         //given
         Employee employee = new Employee(1, "Jason", 10, "male", 1000);
         given(employeeRepository.findById(any()))
@@ -82,5 +82,24 @@ public class EmployeeServiceTest {
 
         //return
         assertEquals(employee,actual);
+    }
+
+    @Test
+    void should_return_employees_when_get_given_employees_and_gender() {
+        //given
+        List<Employee> employees = new ArrayList<>();
+        Employee employee1 = new Employee(1, "Jason",10,"male", 2000);
+        Employee employee2 = new Employee(2, "Santa",20,"female",1000);
+        Employee employee3 = new Employee(3, "Bell",30,"male", 10);
+        employees.add(employee1);
+        employees.add(employee2);
+        employees.add(employee3);
+        given(employeeRepository.findByGender("male"))
+                .willReturn(employees);
+        //when
+        List<Employee> actual = employeeService.findByGender("male");
+        verify(employeeRepository).findByGender("male");
+        //return
+        assertEquals(employees,actual);
     }
 }
