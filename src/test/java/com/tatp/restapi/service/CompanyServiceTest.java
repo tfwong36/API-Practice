@@ -70,6 +70,26 @@ public class CompanyServiceTest {
         //then
         assertEquals(company1, actual);
     }
+
+    @Test
+    void should_get_all_companies_when_getByPaging_given_page_and_pageSize_and_company() throws Exception {
+        //given
+        List<Company> companies = new ArrayList<>();
+        Company company1 = new Company(1,"Spring", null);
+        Company company2 = new Company(2,"Spring2", null);
+
+        Integer page = 1;
+        Integer pageSize = 2;
+
+        given(companyRepository.findByPage(page, pageSize))
+                .willReturn(companies);
+
+        //when`
+        List<Company> actual = companyService.findByPage(page, pageSize);
+        //then
+        assertEquals(companies, actual);
+    }
+
 //    @Test
 //    void should_return_employees_when_findEmployeesByCompanyId_given_employees_and_companies_and_id() {
 //        //given
