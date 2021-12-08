@@ -52,7 +52,7 @@ public class CompanyRepository {
         return updatedCompany;
     }
 
-    public void remove(Integer id) throws NoCompanyFoundException {
+    public void remove(Integer id) {
         Company company = findById(id);
         companies.remove(company);
     }

@@ -19,12 +19,12 @@ public class CompanyController {
     }
 
     @GetMapping("/{id}")
-    public Company getCompanyById(@PathVariable Integer id) throws NoCompanyFoundException, NoCompanyFoundException {
+    public Company getCompanyById(@PathVariable Integer id){
         return companyRepository.findById(id);
     }
 
     @GetMapping("/{id}/employees")
-    public List<Employee> getEmployeesFromCompanyById(@PathVariable Integer id) throws NoCompanyFoundException, NoCompanyFoundException {
+    public List<Employee> getEmployeesFromCompanyById(@PathVariable Integer id){
         return companyRepository.findEmployeesByCompanyId(id);
     }
 
