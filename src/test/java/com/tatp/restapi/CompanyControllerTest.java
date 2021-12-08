@@ -103,4 +103,18 @@ class CompanyControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(5)));
     }
+    @Test
+    void should_return_employee_when_perform_put_given_updated_employee_and_id() throws Exception {
+        //given
+        companyRepository.create(new Company(1,"Spring1", new EmployeeRepository().findAll()));
+        String company="{\"companyName\": \"Spring111\"}";
+        //when
+        //then
+        mockMvc.perform(put("/companies/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(company))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.companyName").value("Spring111"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1));
+    }
 }
