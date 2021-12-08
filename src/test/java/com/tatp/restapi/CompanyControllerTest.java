@@ -71,11 +71,6 @@ class CompanyControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(4));
     }
 
-
-//    @GetMapping("/{id}/employees")
-//    public List<Employee> getEmployeesFromCompanyById(@PathVariable Integer id){
-//        return companyRepository.findEmployeesByCompanyId(id);
-//    }
     @Test
     void should_return_employees_when_perform_get_given_companies_and_company_id() throws Exception {
         //given
@@ -89,6 +84,23 @@ class CompanyControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(6)));
     }
+    @Test
+    void should_return_companies_when_perform_get_given_page_and_pageSize() throws Exception {
+        //given
+        companyRepository.create(new Company(1,"Spring1", new EmployeeRepository().findAll()));
+        companyRepository.create(new Company(2,"Spring2", new EmployeeRepository().findAll()));
+        companyRepository.create(new Company(3,"Spring3", new EmployeeRepository().findAll()));
+        companyRepository.create(new Company(4,"Spring4", new EmployeeRepository().findAll()));
+        companyRepository.create(new Company(5,"Spring5", new EmployeeRepository().findAll()));
+        companyRepository.create(new Company(6,"Spring6", new EmployeeRepository().findAll()));
 
-
+        //when
+        //then
+        mockMvc.perform(get("/companies")
+                .param("page", String.valueOf(1))
+                .param("pageSize", String.valueOf(5))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(5)));
+    }
 }
