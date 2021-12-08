@@ -14,6 +14,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -63,6 +64,26 @@ class EmployeeControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.gender").value("male"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.salary").value(5));
     }
+
+    @Test
+    void should_return_employee_when_perform_get_given_employee_id() throws Exception  {
+        //given
+        List<Employee> employees = new ArrayList<>();
+        Employee employee = new Employee(1, "Jason",18,"male",5);
+        employeeRepository.create(employee);
+        employees.add(employee);
+        //when
+        //then
+        mockMvc.perform(get("/employees/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Jason"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.age").value(18))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.gender").value("male"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.salary").value(5));
+    }
+
 
 
 }
