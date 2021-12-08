@@ -75,11 +75,9 @@ public class CompanyRepository {
     }
 
     public List<Employee> findEmployeesByCompanyId(Integer id){
-        Company company =  companies.stream()
-                .filter(employee -> employee.getId().equals(id))
-                .findFirst()
-                .orElseThrow(NoCompanyFoundException::new);
-        return company.getEmployees();
-
+        return employeeRepository.findAll()
+                .stream()
+                .filter(employee -> employee.getCompanyID().equals(id))
+                .collect(Collectors.toList());
     }
 }
