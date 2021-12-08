@@ -8,15 +8,13 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -105,10 +103,7 @@ class EmployeeControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].gender").value("male"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].salary").value(5));
     }
-//    @GetMapping(params = {"page", "pageSize"})
-//    public List<Employee> getEmployeesByPage(@RequestParam int page, @RequestParam int pageSize){
-//        return employeeRepository.findByPage(page-1, pageSize);
-//    }
+
     @Test
     void should_return_employees_when_perform_get_given_page_and_pageSize() throws Exception {
         //given
@@ -129,5 +124,34 @@ class EmployeeControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(5)));
     }
 
+//    @PutMapping("/{id}") //NOT PATCH?
+//    public Employee editEmployee(@PathVariable Integer id, @RequestBody Employee updatedEmployee){
+//        Employee employee = employeeRepository.findById(id);
+//        if (updatedEmployee.getAge() != null && !updatedEmployee.getAge().equals(0))
+//            employee.setAge(updatedEmployee.getAge());
+//        if (updatedEmployee.getSalary() != null && !updatedEmployee.getSalary().equals(0))
+//            employee.setSalary(updatedEmployee.getSalary());
+//        return employeeRepository.save(id, employee);
+//    }
+    @Test
+    void should_return_employee_when_perform_put_given_updated_employee_and_id() throws Exception {
+        //given
+        employeeRepository.create(new Employee(1, "Jason",18,"male",5));
+        String employee="{\n" +
+                "        \"age\": 20,\n" +
+                "        \"salary\": 500\n" +
+                "    }";
+        //when
+        //then
+        mockMvc.perform(put("/employees/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(employee))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Jason"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.age").value(20))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.gender").value("male"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.salary").value(500));
+    }
 
 }
