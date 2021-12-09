@@ -1,5 +1,6 @@
 package com.tatp.restapi.controller;
 import com.tatp.restapi.entity.Company;
+import com.tatp.restapi.entity.Employee;
 import com.tatp.restapi.repository.CompanyRepository;
 import com.tatp.restapi.repository.CompanyRepositoryMongo;
 import com.tatp.restapi.repository.EmployeeRepository;
@@ -70,15 +71,19 @@ class CompanyControllerTest {
     @Test
     void should_return_employees_when_perform_get_given_companies_and_company_id() throws Exception {
         //given
-        companyRepository.create(new Company("1","Spring1", new EmployeeRepository().findAll()));
-        companyRepository.create(new Company("2","Spring2", new EmployeeRepository().findAll()));
-        companyRepository.create(new Company("3","Spring3", new EmployeeRepository().findAll()));
+        Company saveCompany = companyRepositoryMongo.save(new Company("Spring1"));
+        companyRepositoryMongo.save(new Company("Spring2"));
+        companyRepositoryMongo.save(new Company("Spring3"));
+        Employee employee1 = new Employee("Jason2",18,"male",5, saveCompany.getId());
+        Employee employee2 = new Employee("Jason1",18,"male",5, saveCompany.getId());
+        employeeRepositoryMongo.save(employee1);
+        employeeRepositoryMongo.save(employee2);
 
         //when
         //then
-        mockMvc.perform(MockMvcRequestBuilders.get("/companies/1/employees"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/companies/"+ saveCompany.getId() +"/employees"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(companyRepository.findAll().size())));
+                .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(2)));
     }
     @Test
     void should_return_companies_when_perform_get_given_page_and_pageSize() throws Exception {
