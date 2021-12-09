@@ -29,10 +29,10 @@ class EmployeeControllerTest {
     @Autowired
     EmployeeRepositoryMongo employeeRepositoryMongo;
 
-//    @BeforeEach
-//    void cleanRepository(){
-//        employeeRepositoryMongo.deleteAll();
-//    }
+    @BeforeEach
+    void cleanRepository(){
+        employeeRepositoryMongo.deleteAll();
+    }
 
     @Test
     void should_get_all_employees_when_perform_given_employees() throws Exception {
@@ -85,7 +85,7 @@ class EmployeeControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.age").value(10))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.gender").value("male"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.salary").value(5));
-        assertEquals(1, employeeRepository.findAll().size());
+        assertEquals(1, employeeRepositoryMongo.findAll().size());
     }
 
 
