@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.Mockito.verify;
@@ -40,34 +41,25 @@ public class CompanyServiceTest {
         companies.add(new Company("Spring"));
         given(companyRepositoryMongo.findAll())
                 .willReturn(companies);
-
         //when
         List<Company> actual = companyService.findAll();
-
         //then
         assertEquals(companies, actual);
     }
     @Test
     void should_return_a_company_when_get_company_given_company_id() {
-        //given
+
         List<Company> companies = new ArrayList<>();
-        Company company1 = new Company("1","Spring", null);
-        Company company2 = new Company("2","Spring2", null);
+        Company company1 = new Company("Spring1");
+        Company company2 = new Company("Spring2");
         companies.add(company1);
         companies.add(company2);
-        List<Employee> employees = new ArrayList<>();
-        Employee employee1 = new Employee("1", "AAA", 10, "male", 10, "1");
-        Employee employee2 = new Employee("2", "BBB", 10, "male", 10, "1");
-        employees.add(employee1);
-        employees.add(employee2);
-        given(companyRepository.findById("1"))
-                        .willReturn(company1);
-        given(employeeService.getEmployeesByCompanyID("1"))
-                .willReturn(employees);
+        given(companyRepositoryMongo.findById(any()))
+                .willReturn(java.util.Optional.of(company1));
         //when
-        Company actual = companyService.findById(company1.getId());
+        Company actual =  companyService.findById(company1.getId());
         //then
-        assertEquals(2, actual.getEmployees().size());
+        assertEquals(company1, actual);
     }
 
     @Test
