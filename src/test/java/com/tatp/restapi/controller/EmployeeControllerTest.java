@@ -1,6 +1,7 @@
 package com.tatp.restapi.controller;
 import com.tatp.restapi.entity.Employee;
 import com.tatp.restapi.repository.EmployeeRepository;
+import com.tatp.restapi.repository.EmployeeRepositoryMongo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,27 +26,29 @@ class EmployeeControllerTest {
     MockMvc mockMvc;
     @Autowired
     EmployeeRepository employeeRepository;
+    @Autowired
+    EmployeeRepositoryMongo employeeRepositoryMongo;
 
     @BeforeEach
     void cleanRepository(){
-        employeeRepository.clearAll();
+        employeeRepositoryMongo.deleteAll();
     }
 
     @Test
     void should_get_all_employees_when_perform_given_employees() throws Exception {
         //given
         List<Employee> employees = new ArrayList<>();
-        Employee employee = new Employee("1", "Jason",18,"male",99999999, "1");
-        employeeRepository.create(employee);
-        employees.add(employee);
+        Employee employee = new Employee("Jason",18,"male",99999999);
+        Employee savedEmployee = employeeRepositoryMongo.save(employee);
         //when
         //then
         mockMvc.perform(MockMvcRequestBuilders.get("/employees"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(1)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").isString())
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].age").value(18))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value("Jason"));
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(savedEmployee.getId()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value("Jason"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].gender").value("male"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].age").value(18));
     }
 
     @Test

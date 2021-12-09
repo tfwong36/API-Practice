@@ -3,6 +3,8 @@ package com.tatp.restapi.service;
 import com.tatp.restapi.entity.Employee;
 import com.tatp.restapi.repository.EmployeeRepository;
 import com.tatp.restapi.repository.EmployeeRepositoryMongo;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -30,6 +32,12 @@ public class EmployeeServiceTest {
     @InjectMocks
     EmployeeService employeeService;
 
+//    @BeforeEach
+//    @AfterEach
+//    void cleanRepository(){
+//        employeeRepositoryMongo.deleteAll();
+//    }
+
     @Test
     void should_return_all_employees_when_find_all_given_employees() {
         //given
@@ -51,10 +59,12 @@ public class EmployeeServiceTest {
         List<Employee> employees = new ArrayList<>();
         Employee employee = new Employee("Jason", 10, "male", 1000);
         employees.add(employee);
-        given(employeeRepository.findById(employee.getId()))
-                .willReturn(employee);
+        given(employeeRepositoryMongo.findById(employee.getId()))
+                .willReturn(java.util.Optional.of(employee));
+        System.out.println(employeeRepositoryMongo.findAll().get(0).getId());
         //when
-        Employee actual = employeeService.findById(employee.getId());
+        Employee actual = employeeService.findById(employeeService.findAll().get(0).getId());
+        System.out.println(actual);
         //then
         assertEquals(employee, actual);
     }
