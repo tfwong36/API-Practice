@@ -2,14 +2,12 @@ package com.tatp.restapi.service;
 
 import com.tatp.restapi.entity.Employee;
 import com.tatp.restapi.exception.NoEmployeeFoundException;
-import com.tatp.restapi.repository.CompanyRepository;
 import com.tatp.restapi.repository.EmployeeRepository;
 import com.tatp.restapi.repository.EmployeeRepositoryMongo;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class EmployeeService {
@@ -50,8 +48,9 @@ public class EmployeeService {
         return employeeRepositoryMongo.findAll(PageRequest.of(page, pageSize)).getContent();
     }
 
-    public void remove(String id) {
+    public Employee remove(String id) {
         employeeRepositoryMongo.deleteById(id);
+        return null;
     }
 
     public List<Employee> getEmployeesByCompanyID(String companyID){

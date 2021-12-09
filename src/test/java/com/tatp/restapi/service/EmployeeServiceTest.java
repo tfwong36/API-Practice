@@ -145,16 +145,15 @@ public class EmployeeServiceTest {
         assertEquals(actual,employees);
 
     }
+
     @Test
     void should_return_employee_when_delete_given_employees_id() {
         //given
-        Employee employee = new Employee("1", "God",999,"male",0,"1");
-        given(employeeRepository.remove(any()))
-                .willReturn(employee);
-        //when
-//        Employee actual = employeeService.remove(employee.getId());
-        verify(employeeRepository).remove(employee.getId());
-        //return
-//        assertEquals(employee,actual);
+        Employee employee = new Employee("God",999,"male",0);
+        //When
+        employeeService.remove(employee.getId());
+        //then
+        verify(employeeRepositoryMongo).deleteById(employee.getId());
+
     }
 }
