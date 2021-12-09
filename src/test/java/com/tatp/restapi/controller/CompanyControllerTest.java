@@ -107,16 +107,16 @@ class CompanyControllerTest {
     @Test
     void should_return_employee_when_perform_put_given_updated_employee_and_id() throws Exception {
         //given
-        companyRepository.create(new Company("1","Spring1", new EmployeeRepository().findAll()));
-        String company="{\"companyName\": \"Spring111\"}";
+        Company saveCompany = companyRepositoryMongo.save(new Company("Spring1"));
+        String company="{\"name\": \"UpdatedSpring\"}";
         //when
         //then
-        mockMvc.perform(put("/companies/1")
+        mockMvc.perform(put("/companies/" + saveCompany.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(company))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.companyName").value("Spring111"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("UpdatedSpring"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(saveCompany.getId()));
     }
 
     @Test
