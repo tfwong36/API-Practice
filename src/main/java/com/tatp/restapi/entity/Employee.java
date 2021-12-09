@@ -1,14 +1,14 @@
 package com.tatp.restapi.entity;
 
 public class Employee {
-    private Integer id;
+    private String id;
     private String name;
     private Integer age;
     private String gender;
     private Integer salary;
-    private Integer companyID;
+    private String companyID;
 
-    public Employee(Integer id, String name, Integer age, String gender, Integer salary, Integer companyID) {
+    public Employee(String id, String name, Integer age, String gender, Integer salary, String companyID) {
         this.id = id;
         this.name = name;
         this.age = age;
@@ -17,19 +17,19 @@ public class Employee {
         this.companyID = companyID;
     }
 
-    public Integer getCompanyID() {
+    public String getCompanyID() {
         return companyID;
     }
 
-    public void setCompanyID(Integer companyID) {
+    public void setCompanyID(String companyID) {
         this.companyID = companyID;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -34,7 +34,7 @@ public class CompanyServiceTest {
     void should_return_all_companies_when_find_all_given_companies() {
         //given
         List<Company> companies = new ArrayList<>();
-        companies.add(new Company(1,"Spring", null));
+        companies.add(new Company("1","Spring", null));
         given(companyRepository.findAll())
                 .willReturn(companies);
 
@@ -48,18 +48,18 @@ public class CompanyServiceTest {
     void should_return_a_company_when_get_company_given_company_id() {
         //given
         List<Company> companies = new ArrayList<>();
-        Company company1 = new Company(1,"Spring", null);
-        Company company2 = new Company(2,"Spring2", null);
+        Company company1 = new Company("1","Spring", null);
+        Company company2 = new Company("2","Spring2", null);
         companies.add(company1);
         companies.add(company2);
         List<Employee> employees = new ArrayList<>();
-        Employee employee1 = new Employee(1, "AAA", 10, "male", 10, 1);
-        Employee employee2 = new Employee(2, "BBB", 10, "male", 10, 1);
+        Employee employee1 = new Employee("1", "AAA", 10, "male", 10, "1");
+        Employee employee2 = new Employee("2", "BBB", 10, "male", 10, "1");
         employees.add(employee1);
         employees.add(employee2);
-        given(companyRepository.findById(1))
+        given(companyRepository.findById("1"))
                         .willReturn(company1);
-        given(employeeService.getEmployeesByCompanyID(1))
+        given(employeeService.getEmployeesByCompanyID("1"))
                 .willReturn(employees);
         //when
         Company actual = companyService.findById(company1.getId());
@@ -71,8 +71,8 @@ public class CompanyServiceTest {
     void should_get_all_companies_when_getByPaging_given_page_and_pageSize_and_company() throws Exception {
         //given
         List<Company> companies = new ArrayList<>();
-        Company company1 = new Company(1,"Spring", null);
-        Company company2 = new Company(2,"Spring2", null);
+        Company company1 = new Company("1","Spring", null);
+        Company company2 = new Company("2","Spring2", null);
         companies.add(company1);
         companies.add(company2);
         int page = 1;
@@ -89,7 +89,7 @@ public class CompanyServiceTest {
     @Test
     void should_return_company_when_perform_post_given_company() throws Exception {
         //given
-        Company company = new Company(1,"Spring", null);
+        Company company = new Company("1","Spring", null);
 
         given(companyRepository.create(company))
                 .willReturn(company);
@@ -101,7 +101,7 @@ public class CompanyServiceTest {
     @Test
     void should_delete_company_when_perform_delete_given_company_and_id() throws Exception {
         //given
-        Company company = new Company(1,"Spring", null);
+        Company company = new Company("1","Spring", null);
         willDoNothing().given(companyRepository).remove(company.getId());
 
         //when
@@ -113,17 +113,17 @@ public class CompanyServiceTest {
   @Test
     void should_return_update_company_when_perform_put_given_company_id() throws Exception {
         //given
-        Company company = new Company(1,"Spring", null);
-        Company updatedCompany = new Company(1,"Spring2", null);
+        Company company = new Company("1","Spring", null);
+        Company updatedCompany = new Company("1","Spring2", null);
         company.setCompanyName(updatedCompany.getCompanyName());
 
-        given(companyRepository.save(1, company))
+        given(companyRepository.save("1", company))
             .willReturn(company);
 
-      given(companyRepository.findById(1))
+      given(companyRepository.findById("1"))
               .willReturn(company);
         //when
-        Company actual = companyService.edit(1, updatedCompany);
+        Company actual = companyService.edit("1", updatedCompany);
         //then
         assertEquals(updatedCompany.getId(), actual.getId());
     }

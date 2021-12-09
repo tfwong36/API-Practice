@@ -20,7 +20,7 @@ public class EmployeeService {
         return employeeRepository.findAll();
     }
 
-    public Employee edit(Integer id, Employee updatedEmployee) {
+    public Employee edit(String id, Employee updatedEmployee) {
         Employee employee = employeeRepository.findById(id);
         if (updatedEmployee.getAge() != null && !updatedEmployee.getAge().equals(0))
             employee.setAge(updatedEmployee.getAge());
@@ -29,7 +29,7 @@ public class EmployeeService {
         return employeeRepository.save(id, employee);
     }
 
-    public Employee findById(Integer id) {
+    public Employee findById(String id) {
         return employeeRepository.findById(id);
     }
 
@@ -45,11 +45,11 @@ public class EmployeeService {
         return employeeRepository.findByPage(page, pageSize);
     }
 
-    public Employee remove(Integer id) {
+    public Employee remove(String id) {
         return employeeRepository.remove(id);
     }
 
-    public List<Employee> getEmployeesByCompanyID(Integer companyID){
+    public List<Employee> getEmployeesByCompanyID(String companyID){
         return employeeRepository.getEmployeesByCompanyID(companyID);
     }
 }

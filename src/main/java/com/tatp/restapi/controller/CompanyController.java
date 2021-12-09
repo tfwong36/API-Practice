@@ -1,11 +1,8 @@
 package com.tatp.restapi.controller;
 
-import com.tatp.restapi.repository.CompanyRepository;
 import com.tatp.restapi.entity.Employee;
 import com.tatp.restapi.entity.Company;
-import com.tatp.restapi.repository.EmployeeRepository;
 import com.tatp.restapi.service.CompanyService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,12 +23,12 @@ public class CompanyController {
     }
 
     @GetMapping("/{id}")
-    public Company getCompanyById(@PathVariable Integer id){
+    public Company getCompanyById(@PathVariable String id){
         return companyService.findById(id);
     }
 
     @GetMapping("/{id}/employees")
-    public List<Employee> getEmployeesFromCompanyById(@PathVariable Integer id){
+    public List<Employee> getEmployeesFromCompanyById(@PathVariable String id){
         return companyService.findEmployeesByCompanyId(id);
     }
 
@@ -47,13 +44,13 @@ public class CompanyController {
     }
 
     @PutMapping("/{id}")
-    public Company editCompany(@PathVariable Integer id, @RequestBody Company updatedCompany){
+    public Company editCompany(@PathVariable String id, @RequestBody Company updatedCompany){
         return companyService.edit(id, updatedCompany);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void removeCompany(@PathVariable Integer id){
+    public void removeCompany(@PathVariable String id){
         companyService.remove(id);
     }
 

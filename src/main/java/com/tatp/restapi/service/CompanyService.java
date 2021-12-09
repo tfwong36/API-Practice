@@ -20,13 +20,13 @@ public class CompanyService {
     public List<Company> findAll() {
         return companyRepository.findAll();
     }
-    public Company findById(Integer id) {
+    public Company findById(String id) {
         Company company = companyRepository.findById(id);
         company.setEmployees(employeeService.getEmployeesByCompanyID(id));
         return company;
     }
 
-    public List<Employee> findEmployeesByCompanyId(Integer id) {
+    public List<Employee> findEmployeesByCompanyId(String id) {
         return employeeService.getEmployeesByCompanyID(id);
     }
 
@@ -38,12 +38,12 @@ public class CompanyService {
         return companyRepository.create(company);
     }
 
-    public void remove(Integer id) {
+    public void remove(String id) {
         Company company = companyRepository.findById(id);
         companyRepository.remove(id);
     }
 
-    public Company edit(Integer id, Company updatedCompany){
+    public Company edit(String id, Company updatedCompany){
         Company company = companyRepository.findById(id);
         if (updatedCompany.getCompanyName() != null)
             company.setCompanyName(updatedCompany.getCompanyName());

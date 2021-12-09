@@ -21,7 +21,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/{id}")
-    public Employee getEmployeeById(@PathVariable Integer id){
+    public Employee getEmployeeById(@PathVariable String id){
         return employeeService.findById(id);
     }
 
@@ -42,13 +42,13 @@ public class EmployeeController {
     }
 
     @PutMapping("/{id}") //NOT PATCH?
-    public Employee editEmployee(@PathVariable Integer id, @RequestBody Employee updatedEmployee){
+    public Employee editEmployee(@PathVariable String id, @RequestBody Employee updatedEmployee){
         return employeeService.edit(id, updatedEmployee);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void removeEmployee(@PathVariable Integer id){
+    public void removeEmployee(@PathVariable String id){
         employeeService.remove(id);
     }
 

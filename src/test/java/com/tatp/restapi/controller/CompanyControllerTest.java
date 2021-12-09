@@ -34,15 +34,15 @@ class CompanyControllerTest {
     @Test
     void should_get_all_companies_when_perform_given_companies_and_company_id() throws Exception {
         //given
-        companyRepository.create(new Company(1,"Spring1", new EmployeeRepository().findAll()));
-        companyRepository.create(new Company(2,"Spring2", new EmployeeRepository().findAll()));
-        companyRepository.create(new Company(3,"Spring3", new EmployeeRepository().findAll()));
+        companyRepository.create(new Company("1","Spring1", new EmployeeRepository().findAll()));
+        companyRepository.create(new Company("2","Spring2", new EmployeeRepository().findAll()));
+        companyRepository.create(new Company("3","Spring3", new EmployeeRepository().findAll()));
         //when
         //then
         mockMvc.perform(MockMvcRequestBuilders.get("/companies"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(3)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").isNumber())
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").isString())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].companyName").value("Spring1"));
     }
     @Test
@@ -58,9 +58,9 @@ class CompanyControllerTest {
                 "            \"salary\": 5\n" +
                 "        }]}";
         //given
-        companyRepository.create(new Company(1,"Spring1", new EmployeeRepository().findAll()));
-        companyRepository.create(new Company(2,"Spring2", new EmployeeRepository().findAll()));
-        companyRepository.create(new Company(3,"Spring3", new EmployeeRepository().findAll()));
+        companyRepository.create(new Company("1","Spring1", new EmployeeRepository().findAll()));
+        companyRepository.create(new Company("2","Spring2", new EmployeeRepository().findAll()));
+        companyRepository.create(new Company("3","Spring3", new EmployeeRepository().findAll()));
         //when
         //then
         mockMvc.perform(post("/companies")
@@ -74,9 +74,9 @@ class CompanyControllerTest {
     @Test
     void should_return_employees_when_perform_get_given_companies_and_company_id() throws Exception {
         //given
-        companyRepository.create(new Company(1,"Spring1", new EmployeeRepository().findAll()));
-        companyRepository.create(new Company(2,"Spring2", new EmployeeRepository().findAll()));
-        companyRepository.create(new Company(3,"Spring3", new EmployeeRepository().findAll()));
+        companyRepository.create(new Company("1","Spring1", new EmployeeRepository().findAll()));
+        companyRepository.create(new Company("2","Spring2", new EmployeeRepository().findAll()));
+        companyRepository.create(new Company("3","Spring3", new EmployeeRepository().findAll()));
 
         //when
         //then
@@ -87,12 +87,12 @@ class CompanyControllerTest {
     @Test
     void should_return_companies_when_perform_get_given_page_and_pageSize() throws Exception {
         //given
-        companyRepository.create(new Company(1,"Spring1", new EmployeeRepository().findAll()));
-        companyRepository.create(new Company(2,"Spring2", new EmployeeRepository().findAll()));
-        companyRepository.create(new Company(3,"Spring3", new EmployeeRepository().findAll()));
-        companyRepository.create(new Company(4,"Spring4", new EmployeeRepository().findAll()));
-        companyRepository.create(new Company(5,"Spring5", new EmployeeRepository().findAll()));
-        companyRepository.create(new Company(6,"Spring6", new EmployeeRepository().findAll()));
+        companyRepository.create(new Company("1","Spring1", new EmployeeRepository().findAll()));
+        companyRepository.create(new Company("2","Spring2", new EmployeeRepository().findAll()));
+        companyRepository.create(new Company("3","Spring3", new EmployeeRepository().findAll()));
+        companyRepository.create(new Company("4","Spring4", new EmployeeRepository().findAll()));
+        companyRepository.create(new Company("5","Spring5", new EmployeeRepository().findAll()));
+        companyRepository.create(new Company("6","Spring6", new EmployeeRepository().findAll()));
 
         //when
         //then
@@ -106,7 +106,7 @@ class CompanyControllerTest {
     @Test
     void should_return_employee_when_perform_put_given_updated_employee_and_id() throws Exception {
         //given
-        companyRepository.create(new Company(1,"Spring1", new EmployeeRepository().findAll()));
+        companyRepository.create(new Company("1","Spring1", new EmployeeRepository().findAll()));
         String company="{\"companyName\": \"Spring111\"}";
         //when
         //then
@@ -121,7 +121,7 @@ class CompanyControllerTest {
     @Test
     void should_return_nothing_when_perform_delete_given_employee_id() throws Exception {
         //given
-        companyRepository.create(new Company(1,"Spring1", new EmployeeRepository().findAll()));
+        companyRepository.create(new Company("1","Spring1", new EmployeeRepository().findAll()));
 
         //when
         //then
