@@ -92,8 +92,8 @@ class EmployeeControllerTest {
     @Test
     void should_return_employees_when_perform_get_given_employee_gender() throws Exception  {
         //given
-        employeeRepository.create(new Employee("1", "Jason",18,"male",5, "1"));
-        employeeRepository.create(new Employee("2", "Julia",18,"female",5, "1"));
+        employeeRepositoryMongo.save(new Employee("Jason",18,"male",5));
+        employeeRepositoryMongo.save(new Employee("Jayson",18,"female",5));
 
         //when
         //then
@@ -101,11 +101,9 @@ class EmployeeControllerTest {
                 .param("gender", "male")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(1))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value("Jason"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].age").value(18))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].gender").value("male"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].salary").value(5));
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].gender").value("male"));
     }
 
     @Test
