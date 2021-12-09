@@ -109,12 +109,12 @@ class EmployeeControllerTest {
     @Test
     void should_return_employees_when_perform_get_given_page_and_pageSize() throws Exception {
         //given
-        employeeRepository.create(new Employee("1", "Jason",18,"male",5, "1"));
-        employeeRepository.create(new Employee("2", "Julia1",18,"female",5,"1"));
-        employeeRepository.create(new Employee("3", "Julia2",18,"female",5,"1"));
-        employeeRepository.create(new Employee("4", "Julia3",18,"female",5,"1"));
-        employeeRepository.create(new Employee("5", "Julia4",18,"female",5,"1"));
-        employeeRepository.create(new Employee("6", "Julia5",18,"female",5,"1"));
+        employeeRepositoryMongo.save(new Employee("Jason1",18,"male",5));
+        employeeRepositoryMongo.save(new Employee("Jason2",18,"female",5));
+        employeeRepositoryMongo.save(new Employee("Jason3",18,"female",5));
+        employeeRepositoryMongo.save(new Employee("Jason4",18,"female",5));
+        employeeRepositoryMongo.save(new Employee("Jason5",18,"female",5));
+        employeeRepositoryMongo.save(new Employee("Jason6",18,"female",5));
 
         //when
         //then
@@ -124,11 +124,9 @@ class EmployeeControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(1)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(1))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value("Jason"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value("Jason1"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].age").value(18))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].gender").value("male"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].salary").value(5));
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].gender").value("male"));
     }
 
     @Test
