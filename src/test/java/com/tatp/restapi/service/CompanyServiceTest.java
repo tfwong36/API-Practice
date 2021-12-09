@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
@@ -63,21 +65,14 @@ public class CompanyServiceTest {
     }
 
     @Test
-    void should_get_all_companies_when_getByPaging_given_page_and_pageSize_and_company() throws Exception {
-        //given
+    void should_get_all_companies_when_getByPaging_given_page_and_pageSize_and_company(){
         List<Company> companies = new ArrayList<>();
-        Company company1 = new Company("1","Spring", null);
-        Company company2 = new Company("2","Spring2", null);
-        companies.add(company1);
-        companies.add(company2);
-        int page = 1;
-        int pageSize = 2;
-
-        given(companyRepository.findByPage(page, pageSize))
-                .willReturn(companies);
-
-        //when`
-        List<Company> actual = companyService.findByPage(page, pageSize);
+        companies.add(new Company("company1"));
+        companies.add(new Company("company2"));
+        given(companyRepositoryMongo.findAll(PageRequest.of(1, 2)))
+                .willReturn(new PageImpl<>(companies, PageRequest.of(1, 2), 2));
+        //when
+        List<Company> actual =  companyService.findByPage(1, 2);
         //then
         assertEquals(companies, actual);
     }
