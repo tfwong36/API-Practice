@@ -67,17 +67,17 @@ public class EmployeeServiceTest {
     @Test
     void should_return_updated_employee_when_edit_employee_given_updated_employee() {
         //given
-        Employee employee = new Employee("1", "Jason", 10, "male", 1000,"1");
-        Employee updatedEmployee = new Employee("1", "Jason", 10, "male", 2000,"1");
-        given(employeeRepository.findById(any()))
-                .willReturn(employee);
+        Employee employee = new Employee("Jason", 10, "male", 1000);
+        Employee updatedEmployee = new Employee("Jason", 10, "male", 2000);
+        given(employeeRepositoryMongo.findById(any()))
+                .willReturn(java.util.Optional.of(employee));
         employee.setAge(updatedEmployee.getAge());
         employee.setSalary(updatedEmployee.getSalary());
-        given(employeeRepository.save(any(), any(Employee.class)))
+        given(employeeRepositoryMongo.save(any(Employee.class)))
                 .willReturn(employee);
 
         //when
-        Employee actual = employeeService.edit(employee.getId(), updatedEmployee);
+        Employee actual = employeeService.edit(any(), updatedEmployee);
 
         //then
         assertEquals(employee, actual);
