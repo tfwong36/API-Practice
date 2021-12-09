@@ -1,6 +1,7 @@
 package com.tatp.restapi.service;
 
 import com.tatp.restapi.entity.Employee;
+import com.tatp.restapi.repository.CompanyRepository;
 import com.tatp.restapi.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
 
@@ -9,8 +10,10 @@ import java.util.List;
 @Service
 public class EmployeeService {
     private EmployeeRepository employeeRepository;
-    public EmployeeService(EmployeeRepository employeeRepository){
+    private CompanyRepository companyRepository;
+    public EmployeeService(EmployeeRepository employeeRepository, CompanyRepository companyRepository){
         this.employeeRepository = employeeRepository;
+        this.companyRepository = companyRepository;
     }
 
     public List<Employee> findAll() {
@@ -44,5 +47,9 @@ public class EmployeeService {
 
     public Employee remove(Integer id) {
         return employeeRepository.remove(id);
+    }
+
+    public List<Employee> getEmployeesByCompanyID(Integer companyID){
+        return employeeRepository.getEmployeesByCompanyID(companyID);
     }
 }

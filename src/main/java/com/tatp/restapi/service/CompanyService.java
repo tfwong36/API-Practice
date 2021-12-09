@@ -13,15 +13,12 @@ import java.util.stream.Collectors;
 
 @Service
 public class CompanyService {
-    @Autowired
-    EmployeeRepository employeeRepository;
-    @Autowired
     CompanyRepository companyRepository;
+    EmployeeService employeeService;
 
-    public CompanyService(CompanyRepository companyRepository, EmployeeRepository employeeRepository){
+    public CompanyService(CompanyRepository companyRepository, EmployeeService employeeService) {
         this.companyRepository = companyRepository;
-        this.employeeRepository = employeeRepository;
-
+        this.employeeService = employeeService;
     }
 
     public List<Company> findAll() {
@@ -29,12 +26,12 @@ public class CompanyService {
     }
     public Company findById(Integer id) {
         Company company = companyRepository.findById(id);
-        company.setEmployees(employeeRepository.getEmployeesByCompanyID(id));
+        company.setEmployees(employeeService.getEmployeesByCompanyID(id));
         return company;
     }
 
     public List<Employee> findEmployeesByCompanyId(Integer id) {
-        return employeeRepository.getEmployeesByCompanyID(id);
+        return employeeService.getEmployeesByCompanyID(id);
     }
 
     public List<Company> findByPage(Integer page, Integer pageSize) {

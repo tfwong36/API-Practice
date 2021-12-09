@@ -27,7 +27,7 @@ public class CompanyRepository {
     }
 
     public List<Company> findAll(){
-        return companies;
+        return companies.stream().peek(company->company.setEmployees(null)).collect(Collectors.toList());
     }
 
     public Company findById(Integer id){
