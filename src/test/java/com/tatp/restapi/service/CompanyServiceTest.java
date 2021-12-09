@@ -77,11 +77,11 @@ public class CompanyServiceTest {
         assertEquals(companies, actual);
     }
     @Test
-    void should_return_company_when_perform_post_given_company() throws Exception {
+    void should_return_company_when_perform_post_given_company(){
         //given
-        Company company = new Company("1","Spring", null);
+        Company company = new Company("Spring");
 
-        given(companyRepository.create(company))
+        given(companyRepositoryMongo.save(company))
                 .willReturn(company);
         //when
         Company actual = companyService.create(company);
