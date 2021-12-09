@@ -140,7 +140,7 @@ public class EmployeeServiceTest {
         given(employeeRepository.remove(any()))
                 .willReturn(employee);
         //when
-        Employee actual = employeeService.remove(employee.getId());
+//        Employee actual = employeeService.remove(employee.getId());
         verify(employeeRepository).remove(employee.getId());
         //return
         assertEquals(employee,actual);

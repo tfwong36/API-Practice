@@ -115,7 +115,7 @@ public class CompanyServiceTest {
         //given
         Company company = new Company("1","Spring", null);
         Company updatedCompany = new Company("1","Spring2", null);
-        company.setCompanyName(updatedCompany.getCompanyName());
+        company.setName(updatedCompany.getName());
 
         given(companyRepository.save("1", company))
             .willReturn(company);

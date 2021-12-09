@@ -48,13 +48,13 @@ public class EmployeeController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public EmployeeResponse createEmployee(@RequestBody EmployeeRequest employeeRequest){
-        return employeeMapper.toResponse(employeeService.create(employeeMapper.toEntity(employeeRequest)));
+    public Employee createEmployee(@RequestBody EmployeeRequest employeeRequest){
+        return employeeService.create(employeeMapper.toEntity(employeeRequest));
     }
 
     @PutMapping("/{id}") //NOT PATCH?
-    public EmployeeResponse editEmployee(@PathVariable String id, @RequestBody EmployeeRequest employeeRequest){
-        return employeeMapper.toResponse(employeeService.edit(id, employeeMapper.toEntity(employeeRequest)));
+    public Employee editEmployee(@PathVariable String id, @RequestBody EmployeeRequest employeeRequest){
+        return employeeService.edit(id, employeeMapper.toEntity(employeeRequest));
     }
 
     @DeleteMapping("/{id}")

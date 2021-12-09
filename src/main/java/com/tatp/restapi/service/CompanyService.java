@@ -9,8 +9,9 @@ import java.util.List;
 
 @Service
 public class CompanyService {
-    CompanyRepository companyRepository;
-    EmployeeService employeeService;
+    private CompanyRepository companyRepository;
+    private EmployeeService employeeService;
+
 
     public CompanyService(CompanyRepository companyRepository, EmployeeService employeeService) {
         this.companyRepository = companyRepository;
@@ -22,7 +23,6 @@ public class CompanyService {
     }
     public Company findById(String id) {
         Company company = companyRepository.findById(id);
-        company.setEmployees(employeeService.getEmployeesByCompanyID(id));
         return company;
     }
 
@@ -45,8 +45,8 @@ public class CompanyService {
 
     public Company edit(String id, Company updatedCompany){
         Company company = companyRepository.findById(id);
-        if (updatedCompany.getCompanyName() != null)
-            company.setCompanyName(updatedCompany.getCompanyName());
+        if (updatedCompany.getName() != null)
+            company.setName(updatedCompany.getName());
         return companyRepository.save(id, company);
     }
 

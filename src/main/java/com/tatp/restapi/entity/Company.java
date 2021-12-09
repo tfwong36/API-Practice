@@ -1,21 +1,20 @@
 package com.tatp.restapi.entity;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-
 import java.util.List;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Company {
     private String id;
-    private String companyName;
+    private String name;
     private List<Employee> employees;
 
-    public Company(String id, String companyName, List<Employee> employess) {
+    public Company(String id, String name, List<Employee> employess) {
         this.id = id;
-        this.companyName = companyName;
+        this.name = name;
         this.employees = employess;
     }
+    public Company(){
 
+    }
     public String getId() {
         return id;
     }
@@ -24,12 +23,12 @@ public class Company {
         this.id = id;
     }
 
-    public String getCompanyName() {
-        return companyName;
+    public String getName() {
+        return name;
     }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public List<Employee> getEmployees() {

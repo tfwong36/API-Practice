@@ -1,6 +1,12 @@
 package com.tatp.restapi.entity;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.MongoId;
+import org.springframework.data.mongodb.core.mapping.FieldType;
+
+@Document
 public class Employee {
+    @MongoId(FieldType.OBJECT_ID)
     private String id;
     private String name;
     private Integer age;
