@@ -1,33 +1,20 @@
-package com.tatp.restapi.entity;
+package com.tatp.restapi.dto;
 
-public class Employee {
+public class EmployeeResponse {
     private String id;
     private String name;
     private Integer age;
     private String gender;
-    private Integer salary;
-    private String companyID;
 
-    public Employee(String id, String name, Integer age, String gender, Integer salary, String companyID) {
+    public EmployeeResponse(String id, String name, Integer age, String gender) {
         this.id = id;
         this.name = name;
         this.age = age;
         this.gender = gender;
-        this.salary = salary;
-        this.companyID = companyID;
     }
+    public EmployeeResponse(){
 
-    public Employee() {
     }
-
-    public String getCompanyID() {
-        return companyID;
-    }
-
-    public void setCompanyID(String companyID) {
-        this.companyID = companyID;
-    }
-
     public String getId() {
         return id;
     }
@@ -48,7 +35,7 @@ public class Employee {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
@@ -58,13 +45,5 @@ public class Employee {
 
     public void setGender(String gender) {
         this.gender = gender;
-    }
-
-    public Integer getSalary() {
-        return salary;
-    }
-
-    public void setSalary(Integer salary) {
-        this.salary = salary;
     }
 }
