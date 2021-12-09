@@ -3,7 +3,6 @@ package com.tatp.restapi.service;
 import com.tatp.restapi.entity.Employee;
 import com.tatp.restapi.exception.NoEmployeeFoundException;
 import com.tatp.restapi.repository.EmployeeRepository;
-import com.tatp.restapi.repository.EmployeeRepositoryMongo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,13 +24,13 @@ import static org.mockito.Mockito.verify;
 @ExtendWith(SpringExtension.class)
 public class EmployeeServiceTest {
     @Mock
-    EmployeeRepositoryMongo employeeRepositoryMongo;
+    EmployeeRepository employeeRepository;
     @InjectMocks
     EmployeeService employeeService;
 
     @BeforeEach
     void cleanRepository(){
-        employeeRepositoryMongo.deleteAll();
+        employeeRepository.deleteAll();
     }
 
     @Test
@@ -39,7 +38,7 @@ public class EmployeeServiceTest {
         //given
         List<Employee> employees = new ArrayList<>();
         employees.add(new Employee("Jason", 10, "male", 1000));
-        given(employeeRepositoryMongo.findAll())
+        given(employeeRepository.findAll())
                 .willReturn(employees);
         //when
         List<Employee> actual = employeeService.findAll();
@@ -53,7 +52,7 @@ public class EmployeeServiceTest {
     void should_return_a_employee_when_get_employee_given_employee_id() {
         //given
         Employee employee = new Employee("Jason", 10, "male", 1000);
-        given(employeeRepositoryMongo.findById(any()))
+        given(employeeRepository.findById(any()))
                 .willReturn(java.util.Optional.of(employee));
         //when
         Employee actual = employeeService.findById(any());
@@ -66,11 +65,11 @@ public class EmployeeServiceTest {
         //given
         Employee employee = new Employee("Jason", 10, "male", 1000);
         Employee updatedEmployee = new Employee("Jason", 10, "male", 2000);
-        given(employeeRepositoryMongo.findById(any()))
+        given(employeeRepository.findById(any()))
                 .willReturn(java.util.Optional.of(employee));
         employee.setAge(updatedEmployee.getAge());
         employee.setSalary(updatedEmployee.getSalary());
-        given(employeeRepositoryMongo.save(any(Employee.class)))
+        given(employeeRepository.save(any(Employee.class)))
                 .willReturn(employee);
 
         //when
@@ -86,11 +85,11 @@ public class EmployeeServiceTest {
         List<Employee> employees = new ArrayList<>();
         Employee employee = new Employee("Jason", 10, "male", 1000);
         employees.add(employee);
-        given(employeeRepositoryMongo.findById(employee.getId()))
+        given(employeeRepository.findById(employee.getId()))
                 .willReturn(java.util.Optional.of(employee));
         //when
         Employee actual = employeeService.findById(any());
-        verify(employeeRepositoryMongo).findById(employee.getId());
+        verify(employeeRepository).findById(employee.getId());
 
         //return
         assertEquals(employee, actual);
@@ -103,11 +102,11 @@ public class EmployeeServiceTest {
         employees.add(new Employee("Jason",10,"male", 2000));
         employees.add(new Employee("Santa",20,"female",1000));
         employees.add(new Employee("Klaus",30,"male", 10));
-        given(employeeRepositoryMongo.findByGender("male"))
+        given(employeeRepository.findByGender("male"))
                 .willReturn(employees);
         //when
         List<Employee> actual = employeeService.findByGender("male");
-        verify(employeeRepositoryMongo).findByGender("male");
+        verify(employeeRepository).findByGender("male");
         //return
         assertEquals(employees,actual);
     }
@@ -115,11 +114,11 @@ public class EmployeeServiceTest {
     void should_return_created_employee_when_create_given_employee() {
         //given
         Employee employee1 = new Employee("Jesus",19,"male",1910);
-        given(employeeRepositoryMongo.save(any()))
+        given(employeeRepository.save(any()))
                 .willReturn(employee1);
         //when
         Employee actual = employeeService.create(employee1);
-        verify(employeeRepositoryMongo).save(employee1);
+        verify(employeeRepository).save(employee1);
         //return
         assertEquals(employee1,actual);
     }
@@ -131,13 +130,13 @@ public class EmployeeServiceTest {
         Employee employee2 = new Employee("Bryant",24,"male",2000);
         employees.add(employee1);
         employees.add(employee2);
-        given(employeeRepositoryMongo.findAll(PageRequest.of(1, 2)))
+        given(employeeRepository.findAll(PageRequest.of(1, 2)))
                 .willReturn(new PageImpl<>(employees, PageRequest.of(1, 2), 2));
 
         //When
         List<Employee> actual = employeeService.findByPage(1,2);
         //then
-        verify(employeeRepositoryMongo).findAll(PageRequest.of(1, 2));
+        verify(employeeRepository).findAll(PageRequest.of(1, 2));
         assertEquals(actual,employees);
 
     }
@@ -149,7 +148,7 @@ public class EmployeeServiceTest {
         //When
         employeeService.remove(employee.getId());
         //then
-        verify(employeeRepositoryMongo).deleteById(employee.getId());
+        verify(employeeRepository).deleteById(employee.getId());
 
     }
 
@@ -158,7 +157,7 @@ public class EmployeeServiceTest {
         //given
         Employee employee = new Employee("people",18, "male", 10);
         //when
-        given(employeeRepositoryMongo.findById("-1"))
+        given(employeeRepository.findById("-1"))
                 .willThrow(NoEmployeeFoundException.class);
 
         //then

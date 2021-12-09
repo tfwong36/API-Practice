@@ -1,10 +1,7 @@
 package com.tatp.restapi.service;
 
 import com.tatp.restapi.entity.Company;
-import com.tatp.restapi.entity.Employee;
 import com.tatp.restapi.repository.CompanyRepository;
-import com.tatp.restapi.repository.CompanyRepositoryMongo;
-import com.tatp.restapi.repository.EmployeeRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -26,12 +23,6 @@ import static org.mockito.Mockito.verify;
 public class CompanyServiceTest {
     @Mock
     CompanyRepository companyRepository;
-    @Mock
-    CompanyRepositoryMongo companyRepositoryMongo;
-    @Mock
-    EmployeeRepository employeeRepository;
-    @Mock
-    EmployeeService employeeService;
     @InjectMocks
     CompanyService companyService;
 
@@ -41,7 +32,7 @@ public class CompanyServiceTest {
         //given
         List<Company> companies = new ArrayList<>();
         companies.add(new Company("Spring"));
-        given(companyRepositoryMongo.findAll())
+        given(companyRepository.findAll())
                 .willReturn(companies);
         //when
         List<Company> actual = companyService.findAll();
@@ -56,7 +47,7 @@ public class CompanyServiceTest {
         Company company2 = new Company("Spring2");
         companies.add(company1);
         companies.add(company2);
-        given(companyRepositoryMongo.findById(any()))
+        given(companyRepository.findById(any()))
                 .willReturn(java.util.Optional.of(company1));
         //when
         Company actual =  companyService.findById(company1.getId());
@@ -69,7 +60,7 @@ public class CompanyServiceTest {
         List<Company> companies = new ArrayList<>();
         companies.add(new Company("company1"));
         companies.add(new Company("company2"));
-        given(companyRepositoryMongo.findAll(PageRequest.of(1, 2)))
+        given(companyRepository.findAll(PageRequest.of(1, 2)))
                 .willReturn(new PageImpl<>(companies, PageRequest.of(1, 2), 2));
         //when
         List<Company> actual =  companyService.findByPage(1, 2);
@@ -81,7 +72,7 @@ public class CompanyServiceTest {
         //given
         Company company = new Company("Spring");
 
-        given(companyRepositoryMongo.save(company))
+        given(companyRepository.save(company))
                 .willReturn(company);
         //when
         Company actual = companyService.create(company);
@@ -92,13 +83,13 @@ public class CompanyServiceTest {
     void should_delete_company_when_perform_delete_given_company_and_id() throws Exception {
         //given
         Company company = new Company("Spring");
-        willDoNothing().given(companyRepositoryMongo).deleteById(company.getId());
+        willDoNothing().given(companyRepository).deleteById(company.getId());
 
         //when
         companyService.remove(company.getId());
         //then
-        verify(companyRepositoryMongo).deleteById(company.getId());
-        assertEquals(0,companyRepositoryMongo.findAll().size());
+        verify(companyRepository).deleteById(company.getId());
+        assertEquals(0, companyRepository.findAll().size());
     }
   @Test
     void should_return_update_company_when_perform_put_given_company_id() throws Exception {
@@ -107,10 +98,10 @@ public class CompanyServiceTest {
         Company updatedCompany = new Company("Spring2");
         company.setName(updatedCompany.getName());
 
-        given(companyRepositoryMongo.save(company))
+        given(companyRepository.save(company))
             .willReturn(company);
 
-      given(companyRepositoryMongo.findById(any()))
+      given(companyRepository.findById(any()))
               .willReturn(java.util.Optional.of(company));
         //when
         Company actual = companyService.edit(any(), updatedCompany);

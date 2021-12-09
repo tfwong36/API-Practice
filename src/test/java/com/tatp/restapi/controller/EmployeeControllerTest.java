@@ -1,6 +1,6 @@
 package com.tatp.restapi.controller;
 import com.tatp.restapi.entity.Employee;
-import com.tatp.restapi.repository.EmployeeRepositoryMongo;
+import com.tatp.restapi.repository.EmployeeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +24,11 @@ class EmployeeControllerTest {
     @Autowired
     MockMvc mockMvc;
     @Autowired
-    EmployeeRepositoryMongo employeeRepositoryMongo;
+    EmployeeRepository employeeRepository;
 
     @BeforeEach
     void cleanRepository(){
-        employeeRepositoryMongo.deleteAll();
+        employeeRepository.deleteAll();
     }
 
     @Test
@@ -36,7 +36,7 @@ class EmployeeControllerTest {
         //given
         List<Employee> employees = new ArrayList<>();
         Employee employee = new Employee("Jason",18,"male",99999999);
-        Employee savedEmployee = employeeRepositoryMongo.save(employee);
+        Employee savedEmployee = employeeRepository.save(employee);
         //when
         //then
         mockMvc.perform(MockMvcRequestBuilders.get("/employees"))
@@ -52,7 +52,7 @@ class EmployeeControllerTest {
     void should_return_employee_when_perform_get_given_employee_id() throws Exception  {
         //given
         Employee employee = new Employee("Jason",18,"male",5);
-        Employee saveEmployee = employeeRepositoryMongo.save(employee);
+        Employee saveEmployee = employeeRepository.save(employee);
         //when
         //then
         mockMvc.perform(get("/employees/" + saveEmployee.getId())
@@ -82,15 +82,15 @@ class EmployeeControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.age").value(10))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.gender").value("male"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.salary").value(5));
-        assertEquals(1, employeeRepositoryMongo.findAll().size());
+        assertEquals(1, employeeRepository.findAll().size());
     }
 
 
     @Test
     void should_return_employees_when_perform_get_given_employee_gender() throws Exception  {
         //given
-        employeeRepositoryMongo.save(new Employee("Jason",18,"male",5));
-        employeeRepositoryMongo.save(new Employee("Jayson",18,"female",5));
+        employeeRepository.save(new Employee("Jason",18,"male",5));
+        employeeRepository.save(new Employee("Jayson",18,"female",5));
 
         //when
         //then
@@ -106,12 +106,12 @@ class EmployeeControllerTest {
     @Test
     void should_return_employees_when_perform_get_given_page_and_pageSize() throws Exception {
         //given
-        employeeRepositoryMongo.save(new Employee("Jason1",18,"male",5));
-        employeeRepositoryMongo.save(new Employee("Jason2",18,"female",5));
-        employeeRepositoryMongo.save(new Employee("Jason3",18,"female",5));
-        employeeRepositoryMongo.save(new Employee("Jason4",18,"female",5));
-        employeeRepositoryMongo.save(new Employee("Jason5",18,"female",5));
-        employeeRepositoryMongo.save(new Employee("Jason6",18,"female",5));
+        employeeRepository.save(new Employee("Jason1",18,"male",5));
+        employeeRepository.save(new Employee("Jason2",18,"female",5));
+        employeeRepository.save(new Employee("Jason3",18,"female",5));
+        employeeRepository.save(new Employee("Jason4",18,"female",5));
+        employeeRepository.save(new Employee("Jason5",18,"female",5));
+        employeeRepository.save(new Employee("Jason6",18,"female",5));
 
         //when
         //then
@@ -129,7 +129,7 @@ class EmployeeControllerTest {
     @Test
     void should_return_employee_when_perform_put_given_updated_employee_and_id() throws Exception {
         //given
-        Employee saveEmployee = employeeRepositoryMongo.save(new Employee( "Jason",18,"male",5));
+        Employee saveEmployee = employeeRepository.save(new Employee( "Jason",18,"male",5));
         String employee="{\n" +
                 "        \"age\": 20,\n" +
                 "        \"salary\": 500\n" +
@@ -148,7 +148,7 @@ class EmployeeControllerTest {
     @Test
     void should_return_nothing_when_perform_delete_given_employee_id() throws Exception {
         //given
-        Employee saveEmployee = employeeRepositoryMongo.save(new Employee("Jason",18,"male",5));
+        Employee saveEmployee = employeeRepository.save(new Employee("Jason",18,"male",5));
 
         //when
         //then
@@ -156,7 +156,7 @@ class EmployeeControllerTest {
         mockMvc.perform(delete("/employees/" + saveEmployee.getId())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
-        assertEquals(0, employeeRepositoryMongo.findAll().size());
+        assertEquals(0, employeeRepository.findAll().size());
 
     }
 

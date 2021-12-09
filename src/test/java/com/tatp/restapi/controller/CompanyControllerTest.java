@@ -1,8 +1,8 @@
 package com.tatp.restapi.controller;
 import com.tatp.restapi.entity.Company;
 import com.tatp.restapi.entity.Employee;
-import com.tatp.restapi.repository.CompanyRepositoryMongo;
-import com.tatp.restapi.repository.EmployeeRepositoryMongo;
+import com.tatp.restapi.repository.CompanyRepository;
+import com.tatp.restapi.repository.EmployeeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,21 +23,21 @@ class CompanyControllerTest {
     @Autowired
     MockMvc mockMvc;
     @Autowired
-    CompanyRepositoryMongo companyRepositoryMongo;
+    CompanyRepository companyRepository;
     @Autowired
-    EmployeeRepositoryMongo employeeRepositoryMongo;
+    EmployeeRepository employeeRepository;
 
     @BeforeEach
     void cleanRepository(){
-        companyRepositoryMongo.deleteAll();
+        companyRepository.deleteAll();
     }
 
     @Test
     void should_get_all_companies_when_perform_given_companies_and_company_id() throws Exception {
         //given
-        companyRepositoryMongo.save(new Company("Spring1"));
-        companyRepositoryMongo.save(new Company("Spring2"));
-        companyRepositoryMongo.save(new Company("Spring3"));
+        companyRepository.save(new Company("Spring1"));
+        companyRepository.save(new Company("Spring2"));
+        companyRepository.save(new Company("Spring3"));
         //when
         //then
         mockMvc.perform(MockMvcRequestBuilders.get("/companies"))
@@ -50,9 +50,9 @@ class CompanyControllerTest {
     void should_return_company_when_perform_get_given_companies() throws Exception {
         String company = "{\"name\":\"addSpringBoot\"}";
         //given
-        companyRepositoryMongo.save(new Company("Spring1"));
-        companyRepositoryMongo.save(new Company("Spring2"));
-        companyRepositoryMongo.save(new Company("Spring3"));
+        companyRepository.save(new Company("Spring1"));
+        companyRepository.save(new Company("Spring2"));
+        companyRepository.save(new Company("Spring3"));
         //when
         //then
         mockMvc.perform(post("/companies")
@@ -60,19 +60,19 @@ class CompanyControllerTest {
                 .content(company))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("addSpringBoot"));
-        assertEquals(4 ,companyRepositoryMongo.findAll().size());
+        assertEquals(4 , companyRepository.findAll().size());
     }
 
     @Test
     void should_return_employees_when_perform_get_given_companies_and_company_id() throws Exception {
         //given
-        Company saveCompany = companyRepositoryMongo.save(new Company("Spring1"));
-        companyRepositoryMongo.save(new Company("Spring2"));
-        companyRepositoryMongo.save(new Company("Spring3"));
+        Company saveCompany = companyRepository.save(new Company("Spring1"));
+        companyRepository.save(new Company("Spring2"));
+        companyRepository.save(new Company("Spring3"));
         Employee employee1 = new Employee("Jason2",18,"male",5, saveCompany.getId());
         Employee employee2 = new Employee("Jason1",18,"male",5, saveCompany.getId());
-        employeeRepositoryMongo.save(employee1);
-        employeeRepositoryMongo.save(employee2);
+        employeeRepository.save(employee1);
+        employeeRepository.save(employee2);
 
         //when
         //then
@@ -83,12 +83,12 @@ class CompanyControllerTest {
     @Test
     void should_return_companies_when_perform_get_given_page_and_pageSize() throws Exception {
         //given
-        companyRepositoryMongo.save(new Company("Spring1"));
-        companyRepositoryMongo.save(new Company("Spring2"));
-        companyRepositoryMongo.save(new Company("Spring3"));
-        companyRepositoryMongo.save(new Company("Spring4"));
-        companyRepositoryMongo.save(new Company("Spring5"));
-        companyRepositoryMongo.save(new Company("Spring6"));
+        companyRepository.save(new Company("Spring1"));
+        companyRepository.save(new Company("Spring2"));
+        companyRepository.save(new Company("Spring3"));
+        companyRepository.save(new Company("Spring4"));
+        companyRepository.save(new Company("Spring5"));
+        companyRepository.save(new Company("Spring6"));
 
         //when
         //then
@@ -102,7 +102,7 @@ class CompanyControllerTest {
     @Test
     void should_return_employee_when_perform_put_given_updated_employee_and_id() throws Exception {
         //given
-        Company saveCompany = companyRepositoryMongo.save(new Company("Spring1"));
+        Company saveCompany = companyRepository.save(new Company("Spring1"));
         String company="{\"name\": \"UpdatedSpring\"}";
         //when
         //then
@@ -117,13 +117,13 @@ class CompanyControllerTest {
     @Test
     void should_return_nothing_when_perform_delete_given_employee_id() throws Exception {
         //given
-        Company saveCompany = companyRepositoryMongo.save(new Company("Spring1"));
+        Company saveCompany = companyRepository.save(new Company("Spring1"));
 
         //when
         //then
         mockMvc.perform(delete("/companies/" + saveCompany.getId())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
-        assertEquals(0, companyRepositoryMongo.findAll().size());
+        assertEquals(0, companyRepository.findAll().size());
     }
 }

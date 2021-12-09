@@ -2,7 +2,6 @@ package com.tatp.restapi.controller;
 import com.tatp.restapi.dto.EmployeeRequest;
 import com.tatp.restapi.dto.EmployeeResponse;
 import com.tatp.restapi.mapper.EmployeeMapper;
-import com.tatp.restapi.repository.EmployeeRepository;
 import com.tatp.restapi.entity.Employee;
 import com.tatp.restapi.service.EmployeeService;
 import org.springframework.http.HttpStatus;
