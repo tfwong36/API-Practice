@@ -103,17 +103,17 @@ public class CompanyServiceTest {
   @Test
     void should_return_update_company_when_perform_put_given_company_id() throws Exception {
         //given
-        Company company = new Company("1","Spring", null);
-        Company updatedCompany = new Company("1","Spring2", null);
+        Company company = new Company("Spring");
+        Company updatedCompany = new Company("Spring2");
         company.setName(updatedCompany.getName());
 
-        given(companyRepository.save("1", company))
+        given(companyRepositoryMongo.save(company))
             .willReturn(company);
 
-      given(companyRepository.findById("1"))
-              .willReturn(company);
+      given(companyRepositoryMongo.findById(any()))
+              .willReturn(java.util.Optional.of(company));
         //when
-        Company actual = companyService.edit("1", updatedCompany);
+        Company actual = companyService.edit(any(), updatedCompany);
         //then
         assertEquals(updatedCompany.getId(), actual.getId());
     }
