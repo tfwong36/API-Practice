@@ -88,12 +88,12 @@ class CompanyControllerTest {
     @Test
     void should_return_companies_when_perform_get_given_page_and_pageSize() throws Exception {
         //given
-        companyRepository.create(new Company("1","Spring1", new EmployeeRepository().findAll()));
-        companyRepository.create(new Company("2","Spring2", new EmployeeRepository().findAll()));
-        companyRepository.create(new Company("3","Spring3", new EmployeeRepository().findAll()));
-        companyRepository.create(new Company("4","Spring4", new EmployeeRepository().findAll()));
-        companyRepository.create(new Company("5","Spring5", new EmployeeRepository().findAll()));
-        companyRepository.create(new Company("6","Spring6", new EmployeeRepository().findAll()));
+        companyRepositoryMongo.save(new Company("Spring1"));
+        companyRepositoryMongo.save(new Company("Spring2"));
+        companyRepositoryMongo.save(new Company("Spring3"));
+        companyRepositoryMongo.save(new Company("Spring4"));
+        companyRepositoryMongo.save(new Company("Spring5"));
+        companyRepositoryMongo.save(new Company("Spring6"));
 
         //when
         //then
