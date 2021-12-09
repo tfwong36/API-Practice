@@ -29,10 +29,10 @@ class EmployeeControllerTest {
     @Autowired
     EmployeeRepositoryMongo employeeRepositoryMongo;
 
-    @BeforeEach
-    void cleanRepository(){
-        employeeRepositoryMongo.deleteAll();
-    }
+//    @BeforeEach
+//    void cleanRepository(){
+//        employeeRepositoryMongo.deleteAll();
+//    }
 
     @Test
     void should_get_all_employees_when_perform_given_employees() throws Exception {
@@ -49,6 +49,22 @@ class EmployeeControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value("Jason"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].gender").value("male"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].age").value(18));
+    }
+
+    @Test
+    void should_return_employee_when_perform_get_given_employee_id() throws Exception  {
+        //given
+        Employee employee = new Employee("Jason",18,"male",5);
+        Employee saveEmployee = employeeRepositoryMongo.save(employee);
+        //when
+        //then
+        mockMvc.perform(get("/employees/" + saveEmployee.getId())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(saveEmployee.getId()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Jason"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.age").value(18))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.gender").value("male"));
     }
 
     @Test
@@ -70,25 +86,6 @@ class EmployeeControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.gender").value("male"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.salary").value(5));
         assertEquals(1, employeeRepository.findAll().size());
-    }
-
-    @Test
-    void should_return_employee_when_perform_get_given_employee_id() throws Exception  {
-        //given
-        List<Employee> employees = new ArrayList<>();
-        Employee employee = new Employee("1", "Jason",18,"male",5, "1");
-        employeeRepository.create(employee);
-        employees.add(employee);
-        //when
-        //then
-        mockMvc.perform(get("/employees/1")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Jason"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.age").value(18))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.gender").value("male"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.salary").value(5));
     }
 
 

@@ -34,7 +34,7 @@ public class EmployeeService {
     }
 
     public Employee findById(String id) {
-        return employeeRepository.findById(id);
+        return employeeRepositoryMongo.findById(id).orElseThrow(NoEmployeeFoundException::new);
     }
 
     public List<Employee> findByGender(String gender) {
