@@ -1,9 +1,7 @@
 package com.tatp.restapi.controller;
 import com.tatp.restapi.entity.Company;
 import com.tatp.restapi.entity.Employee;
-import com.tatp.restapi.repository.CompanyRepository;
 import com.tatp.restapi.repository.CompanyRepositoryMongo;
-import com.tatp.restapi.repository.EmployeeRepository;
 import com.tatp.restapi.repository.EmployeeRepositoryMongo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,9 +22,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 class CompanyControllerTest {
     @Autowired
     MockMvc mockMvc;
-    @Autowired
-    CompanyRepository companyRepository;
-
     @Autowired
     CompanyRepositoryMongo companyRepositoryMongo;
     @Autowired

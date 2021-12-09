@@ -32,11 +32,10 @@ public class EmployeeServiceTest {
     @InjectMocks
     EmployeeService employeeService;
 
-//    @BeforeEach
-//    @AfterEach
-//    void cleanRepository(){
-//        employeeRepositoryMongo.deleteAll();
-//    }
+    @BeforeEach
+    void cleanRepository(){
+        employeeRepositoryMongo.deleteAll();
+    }
 
     @Test
     void should_return_all_employees_when_find_all_given_employees() {
@@ -56,15 +55,11 @@ public class EmployeeServiceTest {
     @Test
     void should_return_a_employee_when_get_employee_given_employee_id() {
         //given
-        List<Employee> employees = new ArrayList<>();
         Employee employee = new Employee("Jason", 10, "male", 1000);
-        employees.add(employee);
-        given(employeeRepositoryMongo.findById(employee.getId()))
+        given(employeeRepositoryMongo.findById(any()))
                 .willReturn(java.util.Optional.of(employee));
-        System.out.println(employeeRepositoryMongo.findAll().get(0).getId());
         //when
-        Employee actual = employeeService.findById(employeeService.findAll().get(0).getId());
-        System.out.println(actual);
+        Employee actual = employeeService.findById(any());
         //then
         assertEquals(employee, actual);
     }
