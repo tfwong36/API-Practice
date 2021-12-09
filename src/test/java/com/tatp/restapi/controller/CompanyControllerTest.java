@@ -122,16 +122,13 @@ class CompanyControllerTest {
     @Test
     void should_return_nothing_when_perform_delete_given_employee_id() throws Exception {
         //given
-        companyRepository.create(new Company("1","Spring1", new EmployeeRepository().findAll()));
+        Company saveCompany = companyRepositoryMongo.save(new Company("Spring1"));
 
         //when
         //then
-        mockMvc.perform(delete("/companies/1")
+        mockMvc.perform(delete("/companies/" + saveCompany.getId())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
-        assertEquals(0, companyRepository.findAll().size());
+        assertEquals(0, companyRepositoryMongo.findAll().size());
     }
-
-
-
 }
