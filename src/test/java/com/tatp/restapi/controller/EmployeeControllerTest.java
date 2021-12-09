@@ -151,14 +151,15 @@ class EmployeeControllerTest {
     @Test
     void should_return_nothing_when_perform_delete_given_employee_id() throws Exception {
         //given
-        employeeRepository.create(new Employee("1", "Jason",18,"male",5,"1"));
+        Employee saveEmployee = employeeRepositoryMongo.save(new Employee("Jason",18,"male",5));
 
         //when
         //then
-        mockMvc.perform(delete("/employees/1")
+        System.out.printf("/employees/" + saveEmployee.getId());
+        mockMvc.perform(delete("/employees/" + saveEmployee.getId())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
-        assertEquals(0, employeeRepository.findAll().size());
+        assertEquals(0, employeeRepositoryMongo.findAll().size());
 
     }
 
