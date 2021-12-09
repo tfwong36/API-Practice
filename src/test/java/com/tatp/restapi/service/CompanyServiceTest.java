@@ -91,14 +91,14 @@ public class CompanyServiceTest {
     @Test
     void should_delete_company_when_perform_delete_given_company_and_id() throws Exception {
         //given
-        Company company = new Company("1","Spring", null);
-        willDoNothing().given(companyRepository).remove(company.getId());
+        Company company = new Company("Spring");
+        willDoNothing().given(companyRepositoryMongo).deleteById(company.getId());
 
         //when
         companyService.remove(company.getId());
         //then
-        verify(companyRepository).remove(company.getId());
-        assertEquals(0,companyRepository.findAll().size());
+        verify(companyRepositoryMongo).deleteById(company.getId());
+        assertEquals(0,companyRepositoryMongo.findAll().size());
     }
   @Test
     void should_return_update_company_when_perform_put_given_company_id() throws Exception {
