@@ -4,24 +4,16 @@ import com.tatp.restapi.entity.Company;
 import com.tatp.restapi.entity.Employee;
 import com.tatp.restapi.repository.CompanyRepository;
 import com.tatp.restapi.repository.EmployeeRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.Mockito.verify;
@@ -97,25 +89,25 @@ public class CompanyServiceTest {
     @Test
     void should_return_company_when_perform_post_given_company() throws Exception {
         //given
-        Company company1 = new Company(1,"Spring", null);
+        Company company = new Company(1,"Spring", null);
 
-        given(companyRepository.create(company1))
-                .willReturn(company1);
+        given(companyRepository.create(company))
+                .willReturn(company);
         //when
-        Company actual = companyService.create(company1);
+        Company actual = companyService.create(company);
         //then
-        assertEquals(company1, actual);
+        assertEquals(company, actual);
     }
     @Test
     void should_delete_company_when_perform_delete_given_company_and_id() throws Exception {
         //given
-        Company company1 = new Company(1,"Spring", null);
-        willDoNothing().given(companyRepository).remove(company1.getId());
+        Company company = new Company(1,"Spring", null);
+        willDoNothing().given(companyRepository).remove(company.getId());
 
         //when
-        companyService.remove(company1.getId());
+        companyService.remove(company.getId());
         //then
-        verify(companyRepository).remove(company1.getId());
+        verify(companyRepository).remove(company.getId());
         assertEquals(0,companyRepository.findAll().size());
     }
   @Test
@@ -127,7 +119,8 @@ public class CompanyServiceTest {
 
         given(companyRepository.save(1, company))
             .willReturn(company);
-        given(companyRepository.findById(1))
+
+      given(companyRepository.findById(1))
               .willReturn(company);
         //when
         Company actual = companyService.edit(1, updatedCompany);
