@@ -117,12 +117,12 @@ public class EmployeeServiceTest {
     @Test
     void should_return_created_employee_when_create_given_employee() {
         //given
-        Employee employee1 = new Employee("1", "God",999,"male",0,"1");
-        given(employeeRepository.create(any()))
+        Employee employee1 = new Employee("Jesus",19,"male",1910);
+        given(employeeRepositoryMongo.save(any()))
                 .willReturn(employee1);
         //when
         Employee actual = employeeService.create(employee1);
-        verify(employeeRepository).create(employee1);
+        verify(employeeRepositoryMongo).save(employee1);
         //return
         assertEquals(employee1,actual);
     }
