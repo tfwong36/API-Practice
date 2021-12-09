@@ -55,7 +55,6 @@ public class EmployeeServiceTest {
                 .willReturn(employee);
         //when
         Employee actual = employeeService.findById(employee.getId());
-
         //then
         assertEquals(employee, actual);
     }
