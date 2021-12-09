@@ -3,6 +3,7 @@ package com.tatp.restapi.service;
 import com.tatp.restapi.entity.Company;
 import com.tatp.restapi.entity.Employee;
 import com.tatp.restapi.repository.CompanyRepository;
+import com.tatp.restapi.repository.CompanyRepositoryMongo;
 import com.tatp.restapi.repository.EmployeeRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,6 +24,8 @@ public class CompanyServiceTest {
     @Mock
     CompanyRepository companyRepository;
     @Mock
+    CompanyRepositoryMongo companyRepositoryMongo;
+    @Mock
     EmployeeRepository employeeRepository;
     @Mock
     EmployeeService employeeService;
@@ -34,8 +37,8 @@ public class CompanyServiceTest {
     void should_return_all_companies_when_find_all_given_companies() {
         //given
         List<Company> companies = new ArrayList<>();
-        companies.add(new Company("1","Spring", null));
-        given(companyRepository.findAll())
+        companies.add(new Company("Spring"));
+        given(companyRepositoryMongo.findAll())
                 .willReturn(companies);
 
         //when
