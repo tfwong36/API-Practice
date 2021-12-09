@@ -86,15 +86,17 @@ public class EmployeeServiceTest {
     @Test
     void should_return_employee_when_get_given_employee_id() {
         //given
-        Employee employee = new Employee("1", "Jason", 10, "male", 1000,"1");
-        given(employeeRepository.findById(any()))
-                .willReturn(employee);
+        List<Employee> employees = new ArrayList<>();
+        Employee employee = new Employee("Jason", 10, "male", 1000);
+        employees.add(employee);
+        given(employeeRepositoryMongo.findById(employee.getId()))
+                .willReturn(java.util.Optional.of(employee));
         //when
-        Employee actual = employeeService.findById(employee.getId());
-        verify(employeeRepository).findById(employee.getId());
+        Employee actual = employeeService.findById(any());
+        verify(employeeRepositoryMongo).findById(employee.getId());
 
         //return
-        assertEquals(employee,actual);
+        assertEquals(employee, actual);
     }
 
     @Test
