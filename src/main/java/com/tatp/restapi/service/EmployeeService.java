@@ -46,10 +46,7 @@ public class EmployeeService {
     }
 
     public List<Employee> findByPage(Integer page, Integer pageSize) {
-        return employeeRepositoryMongo.findAll().stream()
-                .skip((long)page * pageSize)
-                .limit(pageSize)
-                .collect(Collectors.toList());
+        return employeeRepositoryMongo.findByPage(page,pageSize);
     }
 
     public void remove(String id) {

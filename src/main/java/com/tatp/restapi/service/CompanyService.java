@@ -32,10 +32,7 @@ public class CompanyService {
     }
 
     public List<Company> findByPage(Integer page, Integer pageSize) {
-        return companyRepositoryMongo.findAll().stream()
-                .skip((long)page * pageSize)
-                .limit(pageSize)
-                .collect(Collectors.toList());
+        return companyRepositoryMongo.findByPage(page, pageSize);
     }
 
     public Company create(Company company) {
