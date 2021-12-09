@@ -25,8 +25,6 @@ class EmployeeControllerTest {
     @Autowired
     MockMvc mockMvc;
     @Autowired
-    EmployeeRepository employeeRepository;
-    @Autowired
     EmployeeRepositoryMongo employeeRepositoryMongo;
 
     @BeforeEach

@@ -1,7 +1,9 @@
 package com.tatp.restapi.controller;
 import com.tatp.restapi.entity.Company;
 import com.tatp.restapi.repository.CompanyRepository;
+import com.tatp.restapi.repository.CompanyRepositoryMongo;
 import com.tatp.restapi.repository.EmployeeRepository;
+import com.tatp.restapi.repository.EmployeeRepositoryMongo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,27 +25,30 @@ class CompanyControllerTest {
     MockMvc mockMvc;
     @Autowired
     CompanyRepository companyRepository;
+
     @Autowired
-    EmployeeRepository employeeRepository;
+    CompanyRepositoryMongo companyRepositoryMongo;
+    @Autowired
+    EmployeeRepositoryMongo employeeRepositoryMongo;
 
     @BeforeEach
     void cleanRepository(){
-        companyRepository.clearAll();
+        companyRepositoryMongo.deleteAll();
     }
 
     @Test
     void should_get_all_companies_when_perform_given_companies_and_company_id() throws Exception {
         //given
-        companyRepository.create(new Company("1","Spring1", new EmployeeRepository().findAll()));
-        companyRepository.create(new Company("2","Spring2", new EmployeeRepository().findAll()));
-        companyRepository.create(new Company("3","Spring3", new EmployeeRepository().findAll()));
+        companyRepositoryMongo.save(new Company("Spring1"));
+        companyRepositoryMongo.save(new Company("Spring2"));
+        companyRepositoryMongo.save(new Company("Spring3"));
         //when
         //then
         mockMvc.perform(MockMvcRequestBuilders.get("/companies"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(3)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").isString())
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].companyName").value("Spring1"));
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value("Spring1"));
     }
     @Test
     void should_return_company_when_perform_get_given_companies() throws Exception {

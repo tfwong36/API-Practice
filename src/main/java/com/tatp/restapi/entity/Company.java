@@ -12,9 +12,13 @@ public class Company {
         this.name = name;
         this.employees = employess;
     }
+    public Company(String name) {
+        this.name = name;
+    }
     public Company(){
 
     }
+
     public String getId() {
         return id;
     }
