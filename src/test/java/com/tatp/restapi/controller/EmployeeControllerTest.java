@@ -132,22 +132,20 @@ class EmployeeControllerTest {
     @Test
     void should_return_employee_when_perform_put_given_updated_employee_and_id() throws Exception {
         //given
-        employeeRepository.create(new Employee("1", "Jason",18,"male",5,"1"));
+        Employee saveEmployee = employeeRepositoryMongo.save(new Employee( "Jason",18,"male",5));
         String employee="{\n" +
                 "        \"age\": 20,\n" +
                 "        \"salary\": 500\n" +
                 "    }";
         //when
         //then
-        mockMvc.perform(put("/employees/1")
+        mockMvc.perform(put("/employees/" + saveEmployee.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(employee))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Jason"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.age").value(20))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.gender").value("male"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.salary").value(500));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.gender").value("male"));
     }
 
     @Test
