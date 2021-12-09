@@ -52,28 +52,19 @@ class CompanyControllerTest {
     }
     @Test
     void should_return_company_when_perform_get_given_companies() throws Exception {
-        String company = "{\n" +
-                "    \"companyName\": \"addSpringBoot\",\n" +
-                "    \"employees\": [\n" +
-                "        {\n" +
-                "            \"id\": 1,\n" +
-                "            \"name\": \"Jason\",\n" +
-                "            \"age\": 18,\n" +
-                "            \"gender\": \"male\",\n" +
-                "            \"salary\": 5\n" +
-                "        }]}";
+        String company = "{\"name\":\"addSpringBoot\"}";
         //given
-        companyRepository.create(new Company("1","Spring1", new EmployeeRepository().findAll()));
-        companyRepository.create(new Company("2","Spring2", new EmployeeRepository().findAll()));
-        companyRepository.create(new Company("3","Spring3", new EmployeeRepository().findAll()));
+        companyRepositoryMongo.save(new Company("Spring1"));
+        companyRepositoryMongo.save(new Company("Spring2"));
+        companyRepositoryMongo.save(new Company("Spring3"));
         //when
         //then
         mockMvc.perform(post("/companies")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(company))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.companyName").value("addSpringBoot"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(4));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("addSpringBoot"));
+        assertEquals(4 ,companyRepositoryMongo.findAll().size());
     }
 
     @Test
