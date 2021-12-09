@@ -5,6 +5,7 @@ import com.tatp.restapi.exception.NoEmployeeFoundException;
 import com.tatp.restapi.repository.CompanyRepository;
 import com.tatp.restapi.repository.EmployeeRepository;
 import com.tatp.restapi.repository.EmployeeRepositoryMongo;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,7 +47,7 @@ public class EmployeeService {
     }
 
     public List<Employee> findByPage(Integer page, Integer pageSize) {
-        return employeeRepositoryMongo.findByPage(page,pageSize);
+        return employeeRepositoryMongo.findAll(PageRequest.of(page, pageSize)).getContent();
     }
 
     public void remove(String id) {

@@ -9,10 +9,4 @@ import java.util.stream.Collectors;
 
 @Repository
 public interface CompanyRepositoryMongo extends MongoRepository<Company, String> {
-    default List<Company> findByPage(Integer page, Integer pageSize){
-        return this.findAll().stream()
-                .skip((long)page * pageSize)
-                .limit(pageSize)
-                .collect(Collectors.toList());
-    };
 }

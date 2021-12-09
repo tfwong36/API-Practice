@@ -10,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -126,25 +127,24 @@ public class EmployeeServiceTest {
         //return
         assertEquals(employee1,actual);
     }
-
     @Test
-    void should_return_employees_when_get_given_employees_and_page_and_pageSize() {
+    void should_return_employees_when_find_by_page_and_pageSize_given_employees_and_page_and_pageSize() {
         //given
         List<Employee> employees = new ArrayList<>();
         Employee employee1 = new Employee("Kobe",8,"male",1000);
         Employee employee2 = new Employee("Bryant",24,"male",2000);
-        Integer page = 2;
-        Integer pageSize = 2;
-        Pageable pageable = PageRequest.of(page, pageSize);
-        given(employeeRepositoryMongo.findAll(pageable))
-                .willReturn((Page<Employee>) Collections.singletonList(employee2));
-        //when
-        List<Employee> actual = employeeService.findByPage(page,pageSize);
-        verify(employeeRepository).findByPage(page,pageSize);
-        //return
-        assertEquals(employees,actual);
-    }
+        employees.add(employee1);
+        employees.add(employee2);
+        given(employeeRepositoryMongo.findAll(PageRequest.of(1, 2)))
+                .willReturn(new PageImpl<>(employees, PageRequest.of(1, 2), 2));
 
+        //When
+        List<Employee> actual = employeeService.findByPage(1,2);
+        //then
+        verify(employeeRepositoryMongo).findAll(PageRequest.of(1, 2));
+        assertEquals(actual,employees);
+
+    }
     @Test
     void should_return_employee_when_delete_given_employees_id() {
         //given

@@ -5,6 +5,7 @@ import com.tatp.restapi.entity.Employee;
 import com.tatp.restapi.exception.NoCompanyFoundException;
 import com.tatp.restapi.repository.CompanyRepository;
 import com.tatp.restapi.repository.CompanyRepositoryMongo;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,7 +33,7 @@ public class CompanyService {
     }
 
     public List<Company> findByPage(Integer page, Integer pageSize) {
-        return companyRepositoryMongo.findByPage(page, pageSize);
+        return companyRepositoryMongo.findAll(PageRequest.of(page, pageSize)).getContent();
     }
 
     public Company create(Company company) {
