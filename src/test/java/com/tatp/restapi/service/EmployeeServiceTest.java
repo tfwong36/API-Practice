@@ -1,6 +1,7 @@
 package com.tatp.restapi.service;
 
 import com.tatp.restapi.entity.Employee;
+import com.tatp.restapi.exception.NoEmployeeFoundException;
 import com.tatp.restapi.repository.EmployeeRepository;
 import com.tatp.restapi.repository.EmployeeRepositoryMongo;
 import org.junit.jupiter.api.AfterEach;
@@ -20,6 +21,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
@@ -155,5 +157,17 @@ public class EmployeeServiceTest {
         //then
         verify(employeeRepositoryMongo).deleteById(employee.getId());
 
+    }
+
+    @Test
+    void should_throw_exception_when_getEmployeeByID_given_employees_and_invalid_id() {
+        //given
+        Employee employee = new Employee("people",18, "male", 10);
+        //when
+        given(employeeRepositoryMongo.findById("-1"))
+                .willThrow(NoEmployeeFoundException.class);
+
+        //then
+        assertThrows(NoEmployeeFoundException.class, () -> employeeService.findById("-1"));
     }
 }
