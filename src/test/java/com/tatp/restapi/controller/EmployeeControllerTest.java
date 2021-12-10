@@ -1,4 +1,5 @@
 package com.tatp.restapi.controller;
+import com.tatp.restapi.entity.Company;
 import com.tatp.restapi.entity.Employee;
 import com.tatp.restapi.repository.EmployeeRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -160,4 +161,15 @@ class EmployeeControllerTest {
 
     }
 
+    @Test
+    void should_throw_exception_when_get_given_invalid_id() throws Exception {
+        //given
+        Employee saveEmployee = employeeRepository.save(new Employee("Jason",18,"male",5));
+        String wrong_id = saveEmployee.getId().replace(saveEmployee.getId().charAt(0), '1');
+        //when
+        //then
+        mockMvc.perform(get("/employees/" + wrong_id)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
 }

@@ -150,7 +150,7 @@ public class EmployeeServiceTest {
     @Test
     void should_throw_exception_when_getEmployeeByID_given_employees_and_invalid_id() {
         //given
-        Employee employee = new Employee("people",18, "male", 10);
+        Employee employee = new Employee("1", "people",18, "male", 10, null);
         //when
         given(employeeRepository.findById("-1"))
                 .willThrow(NoEmployeeFoundException.class);

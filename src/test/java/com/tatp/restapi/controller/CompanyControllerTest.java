@@ -126,4 +126,17 @@ class CompanyControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
         assertEquals(0, companyRepository.findAll().size());
     }
+
+    @Test
+    void should_throw_exception_when_get_given_invalid_id() throws Exception {
+        //given
+        Company saveCompany = companyRepository.save(new Company("Spring1"));
+        String wrong_id = saveCompany.getId().replace(saveCompany.getId().charAt(0), '1');
+        //when
+        //then
+        mockMvc.perform(get("/companies/" + wrong_id)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
 }

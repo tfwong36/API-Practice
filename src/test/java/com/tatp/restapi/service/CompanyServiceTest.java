@@ -1,6 +1,9 @@
 package com.tatp.restapi.service;
 
 import com.tatp.restapi.entity.Company;
+import com.tatp.restapi.entity.Employee;
+import com.tatp.restapi.exception.NoCompanyFoundException;
+import com.tatp.restapi.exception.NoEmployeeFoundException;
 import com.tatp.restapi.repository.CompanyRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
@@ -108,5 +112,17 @@ public class CompanyServiceTest {
         //then
       assertEquals(company, actual);
         assertEquals(company.getId(), actual.getId());
+    }
+
+    @Test
+    void should_throw_exception_when_getCompanyByID_given_companies_and_invalid_id() {
+        //given
+        Company company = new Company("1", "Company1Name",null);
+        //when
+        given(companyRepository.findById("-1"))
+                .willThrow(NoCompanyFoundException.class);
+
+        //then
+        assertThrows(NoCompanyFoundException.class, () -> companyService.findById("-1"));
     }
 }
