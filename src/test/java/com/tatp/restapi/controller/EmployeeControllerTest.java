@@ -165,10 +165,11 @@ class EmployeeControllerTest {
     void should_throw_exception_when_get_given_invalid_id() throws Exception {
         //given
         Employee saveEmployee = employeeRepository.save(new Employee("Jason",18,"male",5));
-        String wrong_id = saveEmployee.getId().replace(saveEmployee.getId().charAt(0), '1');
+        String saveEmployeeID = saveEmployee.getId();
+        employeeRepository.delete(saveEmployee);
         //when
         //then
-        mockMvc.perform(get("/employees/" + wrong_id)
+        mockMvc.perform(get("/employees/" + saveEmployeeID)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
     }

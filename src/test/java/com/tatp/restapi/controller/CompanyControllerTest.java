@@ -131,10 +131,11 @@ class CompanyControllerTest {
     void should_throw_exception_when_get_given_invalid_id() throws Exception {
         //given
         Company saveCompany = companyRepository.save(new Company("Spring1"));
-        String wrong_id = saveCompany.getId().replace(saveCompany.getId().charAt(0), '1');
+        String saveCompanyID = saveCompany.getId();
+        companyRepository.delete(saveCompany);
         //when
         //then
-        mockMvc.perform(get("/companies/" + wrong_id)
+        mockMvc.perform(get("/companies/" + saveCompanyID)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
