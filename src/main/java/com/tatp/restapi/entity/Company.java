@@ -1,16 +1,18 @@
 package com.tatp.restapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.List;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Company {
     private String id;
     private String name;
     private List<Employee> employees;
 
-    public Company(String id, String name, List<Employee> employess) {
+    public Company(String id, String name, List<Employee> employees) {
         this.id = id;
         this.name = name;
-        this.employees = employess;
+        this.employees = employees;
     }
     public Company(String name) {
         this.name = name;
