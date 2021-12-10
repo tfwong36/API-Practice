@@ -39,6 +39,7 @@ public class CompanyService {
     }
 
     public void remove(String id) {
+        companyRepository.findById(id).orElseThrow(NoCompanyFoundException::new);
         companyRepository.deleteById(id);
     }
 

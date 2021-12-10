@@ -1,6 +1,7 @@
 package com.tatp.restapi.service;
 
 import com.tatp.restapi.entity.Employee;
+import com.tatp.restapi.exception.NoCompanyFoundException;
 import com.tatp.restapi.exception.NoEmployeeFoundException;
 import com.tatp.restapi.repository.EmployeeRepository;
 import org.springframework.data.domain.PageRequest;
@@ -46,6 +47,7 @@ public class EmployeeService {
     }
 
     public Employee remove(String id) {
+        employeeRepository.findById(id).orElseThrow(NoEmployeeFoundException::new);
         employeeRepository.deleteById(id);
         return null;
     }
