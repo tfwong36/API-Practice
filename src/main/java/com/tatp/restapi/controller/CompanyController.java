@@ -3,7 +3,6 @@ package com.tatp.restapi.controller;
 import com.tatp.restapi.dto.CompanyRequest;
 import com.tatp.restapi.dto.CompanyResponse;
 import com.tatp.restapi.dto.EmployeeResponse;
-import com.tatp.restapi.entity.Employee;
 import com.tatp.restapi.entity.Company;
 import com.tatp.restapi.mapper.CompanyMapper;
 import com.tatp.restapi.mapper.EmployeeMapper;

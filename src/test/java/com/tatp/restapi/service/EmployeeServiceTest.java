@@ -28,11 +28,6 @@ public class EmployeeServiceTest {
     @InjectMocks
     EmployeeService employeeService;
 
-    @BeforeEach
-    void cleanRepository(){
-        employeeRepository.deleteAll();
-    }
-
     @Test
     void should_return_all_employees_when_find_all_given_employees() {
         //given

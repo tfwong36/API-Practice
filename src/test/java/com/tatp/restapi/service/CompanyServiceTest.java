@@ -106,6 +106,7 @@ public class CompanyServiceTest {
         //when
         Company actual = companyService.edit(any(), updatedCompany);
         //then
-        assertEquals(updatedCompany.getId(), actual.getId());
+      assertEquals(company, actual);
+        assertEquals(company.getId(), actual.getId());
     }
 }

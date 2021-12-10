@@ -1,4 +1,4 @@
-package com.tatp.restapi.advise;
+package com.tatp.restapi.advice;
 
 import com.tatp.restapi.exception.NoCompanyFoundException;
 import com.tatp.restapi.exception.NoEmployeeFoundException;

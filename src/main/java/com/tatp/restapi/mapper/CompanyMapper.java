@@ -4,7 +4,6 @@ import com.tatp.restapi.dto.CompanyRequest;
 import com.tatp.restapi.dto.CompanyResponse;
 import com.tatp.restapi.dto.EmployeeResponse;
 import com.tatp.restapi.entity.Company;
-import com.tatp.restapi.entity.Employee;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 

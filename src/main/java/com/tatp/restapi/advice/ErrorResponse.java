@@ -1,4 +1,4 @@
-package com.tatp.restapi.advise;
+package com.tatp.restapi.advice;
 
 public class ErrorResponse {
     private int code;
